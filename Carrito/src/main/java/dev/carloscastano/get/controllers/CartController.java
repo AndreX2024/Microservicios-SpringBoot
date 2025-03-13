@@ -23,9 +23,6 @@ public class CartController {
     @GetMapping("cart")
     public List<Cart> getAll() {return service.getAll();}
 
-    @GetMapping("cart/user/{idUsuario}")
-    public Cart obtenerCarrito(@PathVariable Long idUsuario) {
-        return service.obtenerCarrito(idUsuario);
-    }
+    
 
 }
