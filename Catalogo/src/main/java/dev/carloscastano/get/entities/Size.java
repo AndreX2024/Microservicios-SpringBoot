@@ -19,4 +19,3 @@ public class Size {
     private Long id_talla;
     private String nombre;
 }
-

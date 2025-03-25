@@ -10,19 +10,24 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "categoria")
+@Table(name = "estado_ticket")
 @Setter
 @Getter
 @ToString
 @EqualsAndHashCode
-public class Category {
+public class TicketStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_categoria;
-    private String nombre;
-    private String descripcion;
+    @Column(name = "id_estado")
+    private Integer idEstado;
 
-    @OneToMany(mappedBy = "categoria", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Column(name = "nombre_estado")
+    private String nombreEstado;
+
+    @OneToMany(mappedBy = "estado", fetch = FetchType.EAGER)
     @JsonBackReference
-    private List<Product> productos;
+    private List<Ticket> tickets;
+
+
+
 }

@@ -1,7 +1,6 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,7 +9,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name = "pago")
@@ -18,25 +16,31 @@ import java.util.List;
 @Getter
 @ToString
 @EqualsAndHashCode
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Pay {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_pago")
     private Long id_pago;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pedido", nullable = false)
-    @JsonBackReference
-    @JsonIgnoreProperties("pedido")
+    @JsonBackReference  // Correcto: evita la recursión infinita al no serializar 'pedido' en 'Pay'
     private Order pedido;
 
-    private String metodo_pago;
-    private String estado_pago;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_metodo", nullable = false)
+    @JsonManagedReference
+    private PayMethod metodoPago;
 
-    @Temporal(TemporalType.DATE)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "id_estado_pago", nullable = false)
+    @JsonManagedReference
+    private PayStatus estadoPago;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "fecha_pago")
     private Date fecha_pago;
 
+    @Column(name = "monto")
     private Double monto;
-
 }
-

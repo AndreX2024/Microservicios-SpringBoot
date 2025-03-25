@@ -16,12 +16,15 @@ public class ProductService implements IProductService {
 
     @Override
     public List<Product> getAll() {
+        return repository.findAll();
+    }
+    /*public List<Product> getAll() {
         List<Product> productos = (List<Product>) repository.findAll();
         productos.forEach(producto -> {
             if (producto.getCategoria() != null) producto.getCategoria().getNombre(); // Fuerza la carga
             if (producto.getProveedor() != null) producto.getProveedor().getNombre();
-            if (producto.getImagen() != null) producto.getImagen().getUrlImagen();
+            //if (producto.getImagen() != null) producto.getImagen().getUrlImagen();
         });
         return productos;
-    }
+    }*/
 }

@@ -1,7 +1,5 @@
 package dev.carloscastano.get.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "producto")
@@ -16,7 +15,6 @@ import javax.persistence.*;
 @Getter
 @ToString
 @EqualsAndHashCode
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,29 +22,26 @@ public class Product {
     private String nombre;
     private String descripcion;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_categoria", nullable = false)
     @JsonManagedReference
-    @JsonIgnoreProperties({"categoria"})
-    private Category categoria;
+    private Category categoria;  // Cambiado a un solo objeto de tipo Category
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_proveedor", nullable = false)
     @JsonManagedReference
-    @JsonIgnoreProperties({"proveedor"})
     private Supplier proveedor;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_imagen", nullable = true)
+
+    @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
-    @JsonIgnoreProperties({"imagen"})
-    private ImageProduct imagen;
+    private List<ImageProduct> imagenes;
 
     private Double precio;
-    private Integer stock;
     private Boolean descuentoActivo;
     private Double porcentajeDescuento;
 
-
+    /*@OneToMany(mappedBy = "producto_stock", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Inventory> inventarios;*/
 }
-

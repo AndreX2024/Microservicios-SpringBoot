@@ -1,8 +1,6 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,7 +15,6 @@ import java.util.Date;
 @Getter
 @ToString
 @EqualsAndHashCode
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class SupportMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +23,6 @@ public class SupportMessage {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ticket")
     @JsonBackReference
-    @JsonIgnoreProperties("ticket")
     private Ticket ticket;
 
     @Column(name = "id_usuario")
@@ -38,6 +34,3 @@ public class SupportMessage {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fecha_envio;
 }
-
-
-

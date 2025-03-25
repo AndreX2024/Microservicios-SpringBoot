@@ -4,11 +4,10 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
 import javax.persistence.*;
 
 @Entity
-@Table(name = "categoria")
+@Table(name = "color")
 @Setter
 @Getter
 @ToString
@@ -19,4 +18,3 @@ public class Color {
     private Long id_color;
     private String nombre;
 }
-

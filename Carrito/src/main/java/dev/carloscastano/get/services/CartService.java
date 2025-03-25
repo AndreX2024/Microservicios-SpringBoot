@@ -15,11 +15,11 @@ public class CartService implements ICartService {
 
     @Override
     public List<Cart> getAll() {
-        return (List<Cart>) repository.findAll();
+        return repository.findAll();
     }
 
     @Override
-    public Cart obtenerCarrito(Long id_usuario) {
-        return repository.findByIdUsuario(id_usuario).orElse(null);
+    public Cart obtenerCarrito(Long idUsuario) {
+        return repository.findByIdUsuario(idUsuario).orElse(null);
     }
 }

@@ -17,20 +17,26 @@ import javax.persistence.*;
 public class CartItems {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_item;
+    @Column(name = "id_item")
+    private Long idItem;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_carrito")
+    @JoinColumn(name = "id_carrito", nullable = false)
     @JsonBackReference
     private Cart carrito;
 
-    private Long id_producto;
-    private Long id_talla;
-    private Long id_color;
+    @Column(name = "id_producto", nullable = false)
+    private Long idProducto;
+
+    @Column(name = "id_talla")
+    private Long idTalla;
+
+    @Column(name = "id_color")
+    private Long idColor;
+
+    @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
-    private Double precio_unitario;
 
+    @Column(name = "precio_unitario", nullable = false)
+    private Double precioUnitario;
 }
-
-
-
