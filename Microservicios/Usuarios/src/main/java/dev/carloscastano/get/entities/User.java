@@ -1,13 +1,11 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -16,10 +14,14 @@ import java.util.List;
 @Getter
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_usuario;
+    @Column(name = "id_usuario")
+    private Long idUsuario;
+
+    private Long documento;
     private String nombre;
     private String apellido;
     private String email;
@@ -27,11 +29,11 @@ public class User {
     private String contraseña;
 
     @ManyToOne
-    @JoinColumn(name = "id_rol", referencedColumnName = "id_rol", insertable = false, updatable = false)
+    @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
     private Role rol;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference("user-address-reference")
     private List<Address> direcciones;
 }
 

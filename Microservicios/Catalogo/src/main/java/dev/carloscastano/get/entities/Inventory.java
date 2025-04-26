@@ -1,16 +1,14 @@
 package dev.carloscastano.get.entities;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "inventario")
-@Setter
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 public class Inventory {
@@ -20,14 +18,17 @@ public class Inventory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_producto", nullable = false)
-    private Product producto_stock;
+    @JsonBackReference("product-inventory-reference")
+    private Product producto;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_talla", nullable = false)
+    @JsonBackReference("inventory-size-reference")
     private Size talla;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_color", nullable = false)
+    @JsonBackReference("inventory-category-reference")
     private Color color;
 
     private Integer stock;

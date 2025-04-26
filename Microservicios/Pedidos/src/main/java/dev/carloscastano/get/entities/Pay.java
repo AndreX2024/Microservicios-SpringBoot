@@ -1,7 +1,6 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,17 +23,17 @@ public class Pay {
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pedido", nullable = false)
-    @JsonBackReference  // Correcto: evita la recursión infinita al no serializar 'pedido' en 'Pay'
+    @JsonBackReference("order-pay-reference")
     private Order pedido;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_metodo", nullable = false)
-    @JsonManagedReference
+    @JsonBackReference("pay-method-reference")
     private PayMethod metodoPago;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_estado_pago", nullable = false)
-    @JsonManagedReference
+    @JsonBackReference("pay-status-reference")
     private PayStatus estadoPago;
 
     @Temporal(TemporalType.TIMESTAMP)

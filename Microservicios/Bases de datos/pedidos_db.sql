@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2025 a las 03:12:37
+-- Tiempo de generación: 31-03-2025 a las 05:35:14
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -44,8 +44,8 @@ CREATE TABLE `detalle_pedido` (
 INSERT INTO `detalle_pedido` (`id_detalle`, `id_pedido`, `id_producto`, `id_talla`, `id_color`, `cantidad`, `precio_unitario`) VALUES
 (1, 1, 1, 2, 1, 2, 120000.00),
 (2, 1, 2, 3, 2, 1, 50000.00),
-(3, 2, 3, 1, 3, 3, 60000.00),
-(4, 3, 4, 2, 2, 1, 75000.00);
+(3, 2, 2, 1, 3, 3, 60000.00),
+(4, 3, 2, 2, 2, 1, 75000.00);
 
 -- --------------------------------------------------------
 
@@ -165,7 +165,10 @@ INSERT INTO `pedido` (`id_pedido`, `id_usuario`, `fecha`, `total`, `id_estado`) 
 --
 ALTER TABLE `detalle_pedido`
   ADD PRIMARY KEY (`id_detalle`),
-  ADD KEY `id_pedido` (`id_pedido`);
+  ADD KEY `id_pedido` (`id_pedido`),
+  ADD KEY `detalle_pedido_ibfk_3` (`id_talla`),
+  ADD KEY `detalle_pedido_ibfk_4` (`id_color`),
+  ADD KEY `detalle_pedido_ibfk_2` (`id_producto`);
 
 --
 -- Indices de la tabla `estado_pago`
@@ -202,7 +205,8 @@ ALTER TABLE `pago`
 --
 ALTER TABLE `pedido`
   ADD PRIMARY KEY (`id_pedido`),
-  ADD KEY `fk_estado_pedido` (`id_estado`);
+  ADD KEY `fk_estado_pedido` (`id_estado`),
+  ADD KEY `fk_id_usuario` (`id_usuario`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas

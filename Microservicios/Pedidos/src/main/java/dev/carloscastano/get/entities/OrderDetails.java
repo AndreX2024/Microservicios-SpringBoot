@@ -1,7 +1,6 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,11 +18,11 @@ public class OrderDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_detalle")
-    private Long id_detalle;
+    private Long idDetalle;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_pedido")
-    @JsonBackReference  // Correcto: evita la serialización de 'pedido' en 'OrderDetails'
+    @JsonBackReference("order-details-referecence")
     private Order pedido;
 
     @Column(name = "id_producto")

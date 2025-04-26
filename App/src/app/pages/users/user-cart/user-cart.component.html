@@ -1,0 +1,46 @@
+<div class="container-fluid p-0 overflow-hidden">
+    <div class="row">
+        <app-sidebar class="col-md-3 col-lg-2 d-md-block"></app-sidebar>
+        <main class="col-md-9 col-lg-10 px-md-4 content">
+            <h2 class="my-4">Carrito de Usuario</h2>
+            @if (hasError) {
+                <div class="alert alert-danger" role="alert">
+                    <h3>No se ha podido conectar con la API</h3>
+                </div>
+            } @else {
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>ID</th>
+                                <th>Id Producto</th>
+                                <th>Id Talla</th>
+                                <th>Id Color</th>
+                                <th>Cantidad</th>
+                                <th>Precio Unitario</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (cartService.cart.items.length == 0) {
+                                <tr>
+                                    <td colspan="6" class="text-center">No hay productos en el carrito</td>
+                                </tr>
+                            } @else {
+                                @for (cart of cartService.cart.items; track $index) {
+                                    <tr>
+                                        <td>{{ cart.idItem }}</td>
+                                        <td>{{ cart.idProducto }}</td>
+                                        <td>{{ cart.idTalla }}</td>
+                                        <td>{{ cart.idColor }}</td>
+                                        <td>{{ cart.cantidad }}</td>
+                                        <td>{{ cart.precioUnitario}}</td>                                    
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </main>
+    </div>
+</div>

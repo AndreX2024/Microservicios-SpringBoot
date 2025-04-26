@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2025 a las 03:12:14
+-- Tiempo de generación: 31-03-2025 a las 05:34:50
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -50,6 +50,7 @@ CREATE TABLE `item_carrito` (
   `id_item` bigint(20) NOT NULL,
   `id_carrito` bigint(20) NOT NULL,
   `id_producto` bigint(20) NOT NULL,
+  `id_imagen` bigint(20) NOT NULL,
   `id_talla` bigint(20) DEFAULT NULL,
   `id_color` bigint(20) DEFAULT NULL,
   `cantidad` int(11) NOT NULL DEFAULT 1,
@@ -60,10 +61,10 @@ CREATE TABLE `item_carrito` (
 -- Volcado de datos para la tabla `item_carrito`
 --
 
-INSERT INTO `item_carrito` (`id_item`, `id_carrito`, `id_producto`, `id_talla`, `id_color`, `cantidad`, `precio_unitario`) VALUES
-(1, 1, 1, 2, 1, 2, 120000.00),
-(2, 1, 2, 3, 2, 1, 50000.00),
-(3, 2, 1, 2, 3, 3, 120000.00);
+INSERT INTO `item_carrito` (`id_item`, `id_carrito`, `id_producto`, `id_imagen`, `id_talla`, `id_color`, `cantidad`, `precio_unitario`) VALUES
+(1, 1, 1, 1, 2, 1, 2, 120000.00),
+(2, 1, 2, 2, 3, 2, 1, 50000.00),
+(3, 2, 1, 1, 2, 3, 3, 120000.00);
 
 --
 -- Índices para tablas volcadas
@@ -73,14 +74,19 @@ INSERT INTO `item_carrito` (`id_item`, `id_carrito`, `id_producto`, `id_talla`, 
 -- Indices de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  ADD PRIMARY KEY (`id_carrito`);
+  ADD PRIMARY KEY (`id_carrito`),
+  ADD KEY `fk_id_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `item_carrito`
 --
 ALTER TABLE `item_carrito`
   ADD PRIMARY KEY (`id_item`),
-  ADD KEY `id_carrito` (`id_carrito`);
+  ADD KEY `id_carrito` (`id_carrito`),
+  ADD KEY `item_carrito_ibfk_2` (`id_producto`),
+  ADD KEY `item_carrito_ibfk_3` (`id_talla`),
+  ADD KEY `item_carrito_ibfk_4` (`id_color`),
+  ADD KEY `item_carrito_ibfk_5` (`id_imagen`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas

@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2025 a las 03:12:53
+-- Tiempo de generación: 31-03-2025 a las 23:43:28
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -91,6 +91,7 @@ INSERT INTO `tipo_direccion` (`id_tipo_direccion`, `nombre_tipo_direccion`) VALU
 
 CREATE TABLE `usuarios` (
   `id_usuario` bigint(20) NOT NULL,
+  `documento` bigint(20) NOT NULL,
   `nombre` varchar(100) NOT NULL,
   `apellido` varchar(100) NOT NULL,
   `email` varchar(150) NOT NULL,
@@ -103,10 +104,10 @@ CREATE TABLE `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id_usuario`, `nombre`, `apellido`, `email`, `telefono`, `contraseña`, `id_rol`) VALUES
-(1, 'Juan', 'Pérez', 'juan@example.com', '3001234567', 'password123', 1),
-(2, 'Maria', 'Gomez', 'maria@example.com', '3119876543', 'password456', 1),
-(3, 'Admin', 'Principal', 'admin@example.com', '3205551234', 'admin123', 2);
+INSERT INTO `usuarios` (`id_usuario`, `documento`, `nombre`, `apellido`, `email`, `telefono`, `contraseña`, `id_rol`) VALUES
+(1, 38421567, 'Juan', 'Pérez', 'juan@example.com', '3001234567', 'password123', 1),
+(2, 691115496, 'Maria', 'Gomez', 'maria@example.com', '3119876543', 'password456', 1),
+(3, 822645841, 'Admin', 'Principal', 'admin@example.com', '3205551234', 'admin123', 2);
 
 --
 -- Índices para tablas volcadas
@@ -137,7 +138,6 @@ ALTER TABLE `tipo_direccion`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id_usuario`),
-  ADD UNIQUE KEY `email` (`email`),
   ADD KEY `id_rol` (`id_rol`);
 
 --

@@ -6,15 +6,19 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class CartService {
-  readonly URL_API = 'http://localhost:8082/cart/}';
+  readonly URL_API = 'http://localhost:8082/cart';
 
-  cart: Cart[];
+  cart: Cart;
 
-  constructor(private hhttp: HttpClient) {
-    this.cart = [];
+  constructor(private http: HttpClient) {
+    this.cart = {
+      idCarrito: 0,
+      idUsuario: 0,
+      items: []
+    };
   }
 
   getCartByUser(id: number) {
-    return this.hhttp.get<Cart[]>(`${this.URL_API}${id}/user/${id}`);
+    return this.http.get<Cart>(`${this.URL_API}/user/${id}`);
   }
 }

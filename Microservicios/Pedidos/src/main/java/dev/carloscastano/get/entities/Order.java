@@ -1,5 +1,6 @@
 package dev.carloscastano.get.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,15 +33,16 @@ public class Order {
     @Column(name = "total")
     private Double total;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_estado", nullable = false)
+    @JsonBackReference("order-status-reference")
     private OrderStatus estado;
 
-    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference  // Correcto: aquí estamos indicando que la relación 'detalles' es manejada
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference("order-details-referecence")
     private List<OrderDetails> detalles;
 
-    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonManagedReference  // Correcto: indicando que 'pago' es la propiedad que será serializada
+    @OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference("order-pay-reference")
     private Pay pago;
 }

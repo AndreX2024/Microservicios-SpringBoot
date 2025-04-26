@@ -1,6 +1,6 @@
 package dev.carloscastano.get.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,13 +17,12 @@ public class OrderStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_estado")
-    private Integer idEstado;
+    private Long idEstado;
 
     @Column(name = "estado")
     private String estado;
 
     @OneToMany(mappedBy = "estado", fetch = FetchType.EAGER)
-    @JsonBackReference  // Correcto: no se serializa la lista de 'pedidos' en 'OrderStatus'
+    @JsonManagedReference("order-status-reference")
     private List<Order> pedidos;
 }
-

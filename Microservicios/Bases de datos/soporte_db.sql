@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2025 a las 03:12:46
+-- Tiempo de generación: 31-03-2025 a las 05:35:26
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -50,7 +50,6 @@ INSERT INTO `estado_ticket` (`id_estado`, `nombre_estado`) VALUES
 CREATE TABLE `mensaje_soporte` (
   `id_mensaje` bigint(20) NOT NULL,
   `id_ticket` bigint(20) NOT NULL,
-  `id_usuario` bigint(20) NOT NULL,
   `mensaje` text NOT NULL,
   `fecha_envio` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -59,11 +58,11 @@ CREATE TABLE `mensaje_soporte` (
 -- Volcado de datos para la tabla `mensaje_soporte`
 --
 
-INSERT INTO `mensaje_soporte` (`id_mensaje`, `id_ticket`, `id_usuario`, `mensaje`, `fecha_envio`) VALUES
-(1, 1, 1, 'No puedo pagar con mi tarjeta, ¿qué puedo hacer?', '2025-03-10 10:05:00'),
-(2, 1, 5, 'Verifica que tu tarjeta tenga saldo disponible.', '2025-03-10 10:10:00'),
-(3, 2, 2, 'Mi pedido llegó sin la camiseta que ordené.', '2025-03-09 15:50:00'),
-(4, 3, 3, 'Intenté recuperar mi cuenta y no recibo el correo.', '2025-03-08 12:05:00');
+INSERT INTO `mensaje_soporte` (`id_mensaje`, `id_ticket`, `mensaje`, `fecha_envio`) VALUES
+(1, 1, 'No puedo pagar con mi tarjeta, ¿qué puedo hacer?', '2025-03-10 10:05:00'),
+(2, 1, 'Verifica que tu tarjeta tenga saldo disponible.', '2025-03-10 10:10:00'),
+(3, 2, 'Mi pedido llegó sin la camiseta que ordené.', '2025-03-09 15:50:00'),
+(4, 3, 'Intenté recuperar mi cuenta y no recibo el correo.', '2025-03-08 12:05:00');
 
 -- --------------------------------------------------------
 
@@ -106,8 +105,7 @@ ALTER TABLE `estado_ticket`
 --
 ALTER TABLE `mensaje_soporte`
   ADD PRIMARY KEY (`id_mensaje`),
-  ADD KEY `id_ticket` (`id_ticket`),
-  ADD KEY `idx_mensaje_usuario` (`id_usuario`);
+  ADD KEY `id_ticket` (`id_ticket`);
 
 --
 -- Indices de la tabla `ticket`

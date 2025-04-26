@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2025 a las 03:12:28
+-- Tiempo de generación: 31-03-2025 a las 05:35:05
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -116,7 +116,7 @@ CREATE TABLE `producto` (
   `id_categoria` bigint(20) NOT NULL,
   `id_proveedor` bigint(20) NOT NULL,
   `precio` decimal(10,2) NOT NULL,
-  `descuento_activo` tinyint(1) DEFAULT 0,
+  `descuento_activo` tinyint(1) NOT NULL,
   `porcentaje_descuento` decimal(5,2) DEFAULT 0.00
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 

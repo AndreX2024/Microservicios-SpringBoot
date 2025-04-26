@@ -1,12 +1,14 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,6 +17,7 @@ import java.util.List;
 @Getter
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class AddressType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,7 +26,7 @@ public class AddressType {
     @Column(name = "nombre_tipo_direccion")
     private String nombreTipoDireccion;
 
-    @OneToMany(mappedBy = "tipoDireccion", fetch = FetchType.EAGER)
-    @JsonBackReference
+    @OneToMany(mappedBy = "tipoDireccion", fetch = FetchType.LAZY)
+    @JsonBackReference("address-type-reference")
     private List<Address> addressType;
 }

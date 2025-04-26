@@ -1,28 +1,26 @@
 package dev.carloscastano.get.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
 @Table(name = "proveedor")
-@Setter
 @Getter
+@Setter
 @ToString
 @EqualsAndHashCode
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_proveedor;
+
     private String nombre;
     private String telefono;
 
     @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonManagedReference("product-supplier-reference")
     private List<Product> productos;
 }

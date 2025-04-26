@@ -2,7 +2,8 @@ import { Address } from "./Address";
 import { Role } from "./Role";
 
 export interface User {
-    id_usuario: number,
+    idUsuario: number,
+    documento: string,
     nombre: string,
     apellido: string,
     email: string,

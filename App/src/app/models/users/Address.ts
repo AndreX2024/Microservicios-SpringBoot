@@ -6,6 +6,5 @@ export interface Address {
     ciudad: string;
     departamento: string;
     codigo_postal: string;
-    
     tipoDireccion: TypeAddress;
 }
