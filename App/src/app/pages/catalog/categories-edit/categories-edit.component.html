@@ -1,0 +1,24 @@
+<form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="nombre" formControlName="nombre">
+        @if (categoryForm.get('nombre')?.hasError('required') && categoryForm.get('nombre')?.touched) {
+        <div class="invalid-feedback d-block">El nombre es obligatorio.</div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <input type="text" class="form-control" id="descripcion" formControlName="descripcion">
+        @if (categoryForm.get('descripcion')?.hasError('required') && categoryForm.get('descripcion')?.touched) {
+        <div class="invalid-feedback d-block">La descripción es obligatoria.</div>
+        }
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" (click)="onCancel.emit()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+            {{ isSaving ? 'Guardando...' : 'Guardar' }}
+        </button>
+    </div>
+</form>

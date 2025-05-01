@@ -3,7 +3,7 @@ package dev.carloscastano.get.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "imagen_producto")
@@ -14,12 +14,11 @@ import javax.persistence.*;
 public class ImageProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_imagen;
+    @Column(name = "id_imagen")
+    private Long idImagen;
 
     @Column(name = "url_imagen", nullable = false)
     private String urlImagen;
-
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_producto", nullable = false)

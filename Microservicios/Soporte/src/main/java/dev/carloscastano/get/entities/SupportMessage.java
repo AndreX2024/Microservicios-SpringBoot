@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -18,19 +18,18 @@ import java.util.Date;
 public class SupportMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_mensaje;
+    @Column(name = "id_mensaje")
+    private Long idMensaje;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_ticket")
     @JsonBackReference
     private Ticket ticket;
 
-    @Column(name = "id_usuario")
-    private Long idUsuario;
-
     @Column(columnDefinition = "TEXT")
     private String mensaje;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha_envio;
+    @Column(name = "fecha_envio")
+    private Date fechaEnvio;
 }

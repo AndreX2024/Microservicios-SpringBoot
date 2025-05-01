@@ -2,14 +2,11 @@ package dev.carloscastano.get.controllers;
 
 import dev.carloscastano.get.entities.Cart;
 import dev.carloscastano.get.entities.CartItems;
-import dev.carloscastano.get.repository.CartItemRepository;
-import dev.carloscastano.get.repository.CartRepository;
 import dev.carloscastano.get.services.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -19,102 +16,112 @@ import java.util.Optional;
 public class CartController {
 
     @Autowired
-    private ICartService service;
+    private ICartService cartService;
 
-    @Autowired
-    private CartRepository cartRepository;
-
-    @Autowired
-    private CartItemRepository cartItemRepository;
-
-    // Métodos GET
+    // Métodos para Cart
     @GetMapping
-    public List<Cart> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<Cart>> getAllCarts() {
+        List<Cart> carts = cartService.findAll();
+        return new ResponseEntity<>(carts, HttpStatus.OK);
     }
 
-    @GetMapping("/user/{idUsuario}")
-    public Cart obtenerCarrito(@PathVariable Long idUsuario) {
-        return service.obtenerCarrito(idUsuario);
+    @GetMapping("/{id}")
+    public ResponseEntity<Cart> getCartById(@PathVariable Long id) {
+        Optional<Cart> cart = cartService.findById(id);
+        return cart.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @GetMapping("/{idCarrito}/items")
-    public List<CartItems> obtenerItemsDelCarrito(@PathVariable Long idCarrito) {
-        return service.obtenerItemsDelCarrito(idCarrito);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Cart> getCartByUserId(@PathVariable Long userId) {
+        Optional<Cart> cart = cartService.findByUserId(userId);
+        return cart.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 
-    // Métodos POST
     @PostMapping
-    public Cart crearCarrito(@RequestBody Cart carrito) {
-        return service.crearCarrito(carrito);
+    public ResponseEntity<Cart> createCart(@RequestBody Cart cart) {
+        Cart savedCart = cartService.save(cart);
+        return new ResponseEntity<>(savedCart, HttpStatus.CREATED);
     }
 
-    @PostMapping("/{idCarrito}/items")
-    public CartItems agregarItemAlCarrito(@PathVariable Long idCarrito, @RequestBody CartItems item) {
-        return service.agregarItemAlCarrito(idCarrito, item);
+    @PutMapping("{id}")
+    public ResponseEntity<Cart> updateCart(@PathVariable Long id, @RequestBody Cart cart) {
+        Cart updatedCart = cartService.updateCart(id, cart);
+        if (updatedCart != null) {
+            return new ResponseEntity<>(updatedCart, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-
-
-    // Métodos PUT
-    @PutMapping("/{idCarrito}/items/update")
-    public ResponseEntity<CartItems> updateItems(@PathVariable Long idCarrito, @RequestBody CartItems items){
-        Optional<CartItems> cartdata = cartItemRepository.findById(idCarrito);
-        if (cartdata.isPresent()){
-            CartItems cartItemsData = cartdata.get();
-            cartItemsData.setIdProducto(items.getIdProducto());
-            cartItemsData.setIdTalla(items.getIdTalla());
-            cartItemsData.setIdColor(items.getIdColor());
-            cartItemsData.setCantidad(items.getCantidad());
-            cartItemsData.setPrecioUnitario(items.getPrecioUnitario());
-            return new ResponseEntity<>(cartItemRepository.save(cartItemsData), HttpStatus.ACCEPTED);
-        } else {
-            return new ResponseEntity<>(HttpStatus.FOUND);
+    @PatchMapping("/{id}")
+    public ResponseEntity<Cart> partialUpdateCart(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Cart updatedCart = cartService.partialUpdateCart(id, updates);
+        if (updatedCart != null) {
+            return new ResponseEntity<>(updatedCart, HttpStatus.OK);
         }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCart(@PathVariable Long id) {
+        cartService.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
-    @PatchMapping("/{idCarrito}/items/{idItem}")
-    public ResponseEntity<?> actualizarItemEnCarrito(
-            @PathVariable("idCarrito") Long idCarrito,
-            @PathVariable("idItem") Long idItem,
-            @RequestBody Map<String, Object> updates) {
+    // Métodos para CartItems
+    // Métodos GET
+    @GetMapping("/cart-items")
+    public ResponseEntity<List<CartItems>> getAllCartItems() {
+        List<CartItems> items = cartService.findAllItems();
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
 
-        // 1. Verificar que el carrito existe
-        Optional<Cart> cartData = cartRepository.findById(idCarrito);
-        if (cartData.isEmpty()) {
-            return new ResponseEntity<>("Carrito no encontrado con ID: " + idCarrito, HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/cart-items/{id}")
+    public ResponseEntity<CartItems> getCartItemById(@PathVariable Long id) {
+        Optional<CartItems> item = cartService.findItemById(id);
+        return item.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
-        // 2. Verificar que el ítem existe y pertenece a este carrito
-        Optional<CartItems> itemData = cartItemRepository.findById(idItem);
-        if (itemData.isEmpty() || !itemData.get().getCarrito().getIdCarrito().equals(idCarrito)) {
-            return new ResponseEntity<>("Ítem no encontrado en este carrito", HttpStatus.NOT_FOUND);
-        }
+    @GetMapping("/carts/{cartId}/items")
+    public ResponseEntity<List<CartItems>> getCartItemsByCartId(@PathVariable Long cartId) {
+        List<CartItems> items = cartService.findItemsByCartId(cartId);
+        return new ResponseEntity<>(items, HttpStatus.OK);
+    }
 
-        CartItems existingItem = itemData.get();
+    //Métodos POST
+    @PostMapping("/cart-items")
+    public ResponseEntity<CartItems> createCartItem(@RequestBody CartItems item) {
+        CartItems savedItem = cartService.saveItem(item);
+        return new ResponseEntity<>(savedItem, HttpStatus.CREATED);
+    }
 
-        // 3. Actualizar solo los campos proporcionados
-        if (updates.containsKey("cantidad")) {
-            existingItem.setCantidad(Integer.valueOf(updates.get("cantidad").toString()));
+    //Métodos PUT
+    @PutMapping("/cart-items/{id}")
+    public ResponseEntity<CartItems> updateCartItem(@PathVariable Long id, @RequestBody CartItems item) {
+        CartItems updatedItem = cartService.updateCartItem(id, item);
+        if (updatedItem != null) {
+            return new ResponseEntity<>(updatedItem, HttpStatus.OK);
         }
-        if (updates.containsKey("precioUnitario")) {
-            existingItem.setPrecioUnitario(Double.valueOf(updates.get("precioUnitario").toString()));
-        }
-        if (updates.containsKey("idProducto")) {
-            existingItem.setIdProducto(Long.valueOf(updates.get("idProducto").toString()));
-        }
-        if (updates.containsKey("idTalla")) {
-            String tallaValue = updates.get("idTalla").toString();
-            existingItem.setIdTalla(tallaValue.isEmpty() ? null : Long.valueOf(tallaValue));
-        }
-        if (updates.containsKey("idColor")) {
-            String colorValue = updates.get("idColor").toString();
-            existingItem.setIdColor(colorValue.isEmpty() ? null : Long.valueOf(colorValue));
-        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
-        // 4. Guardar los cambios
-        return new ResponseEntity<>(cartItemRepository.save(existingItem), HttpStatus.ACCEPTED);
+    //Métodos PATCH
+    @PatchMapping("/cart-items/{id}")
+    public ResponseEntity<CartItems> partialUpdateCartItem(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        CartItems updatedItem = cartService.partialUpdateCartItem(id, updates);
+        if (updatedItem != null) {
+            return new ResponseEntity<>(updatedItem, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    //Métodos DELETE
+    @DeleteMapping("/cart-items/{id}")
+    public ResponseEntity<Void> deleteCartItem(@PathVariable Long id) {
+        cartService.deleteItemById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

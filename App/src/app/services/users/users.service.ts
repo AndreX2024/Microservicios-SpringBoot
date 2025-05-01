@@ -11,79 +11,81 @@ import { TypeAddress } from '../../models/users/TypeAddress';
 })
 export class UsersService {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:8080/users';
+  private apiUrl = 'http://localhost:8080'; // URL base del microservicio
 
-  users: User[];
-
-  constructor() {
-    this.users = [];
-  }
+  constructor() { }
 
   // Métodos para Usuarios
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.apiUrl).pipe(
+    return this.http.get<User[]>(`${this.apiUrl}/users`).pipe(
       catchError(this.handleError)
     );
   }
 
   getUserById(id: number): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/${id}`).pipe(
-      catchError(this.handleError)
-    );
-  }
-
-  getUserByDocument(documento: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/documento/${documento}`).pipe(
+    return this.http.get<User>(`${this.apiUrl}/users/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
   createUser(user: User): Observable<User> {
-    return this.http.post<User>(this.apiUrl, user).pipe(
+    return this.http.post<User>(`${this.apiUrl}/users`, user).pipe(
       catchError(this.handleError)
     );
   }
 
   updateUser(id: number, user: User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/update/${id}`, user).pipe(
+    return this.http.put<User>(`${this.apiUrl}/users/${id}`, user).pipe(
       catchError(this.handleError)
     );
   }
 
   deleteUser(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`).pipe(
+    return this.http.delete<void>(`${this.apiUrl}/users/${id}`).pipe(
       catchError(this.handleError)
     );
   }
 
-  // Métodos para Direcciones (Ajustados)
+  // Métodos para Direcciones
   getAddressById(addressId: number): Observable<Address> {
     return this.http.get<Address>(`${this.apiUrl}/addresses/${addressId}`).pipe(
       catchError(this.handleError)
     );
   }
 
-  addAddress(documentoUsuario: number, address: Address): Observable<Address> {
-    return this.http.post<Address>(
-      `${this.apiUrl}/${documentoUsuario}/direcciones`, 
-      address
-    ).pipe(
+  createAddress(address: Address): Observable<Address> {
+    return this.http.post<Address>(`${this.apiUrl}/addresses`, address).pipe(
       catchError(this.handleError)
     );
   }
 
   updateAddress(addressId: number, address: Address): Observable<Address> {
-    return this.http.put<Address>(
-      `${this.apiUrl}/update/address/${addressId}`, 
-      address
-    ).pipe(
+    return this.http.put<Address>(`${this.apiUrl}/addresses/${addressId}`, address).pipe(
       catchError(this.handleError)
     );
   }
 
-  // Métodos para Tipos de Dirección (Nuevo endpoint necesario en backend)
+  deleteAddress(addressId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/addresses/${addressId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getAddressesByUserId(userId: number): Observable<Address[]> {
+    return this.http.get<Address[]>(`${this.apiUrl}/addresses/user/${userId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  // Métodos para Tipos de Dirección
   getAddressTypes(): Observable<TypeAddress[]> {
     return this.http.get<TypeAddress[]>(`${this.apiUrl}/address-types`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getAddressTypeById(typeId: number): Observable<TypeAddress> {
+    return this.http.get<TypeAddress>(`${this.apiUrl}/address-types/${typeId}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -91,6 +93,12 @@ export class UsersService {
   // Métodos para Roles
   getRoles(): Observable<Role[]> {
     return this.http.get<Role[]>(`${this.apiUrl}/roles`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getRoleById(roleId: number): Observable<Role> {
+    return this.http.get<Role>(`${this.apiUrl}/roles/${roleId}`).pipe(
       catchError(this.handleError)
     );
   }

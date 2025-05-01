@@ -1,9 +1,10 @@
 package dev.carloscastano.get.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,8 @@ import java.util.List;
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_proveedor;
+    @Column(name = "id_proveedor")
+    private Long idProveedor;
 
     private String nombre;
     private String telefono;

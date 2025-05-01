@@ -1,9 +1,10 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "inventario")
@@ -14,7 +15,8 @@ import javax.persistence.*;
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_inventario;
+    @Column(name = "id_inventario")
+    private Long idInventario;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_producto", nullable = false)
@@ -28,7 +30,7 @@ public class Inventory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_color", nullable = false)
-    @JsonBackReference("inventory-category-reference")
+    @JsonBackReference("inventory-color-reference")
     private Color color;
 
     private Integer stock;

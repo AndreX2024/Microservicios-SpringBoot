@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -19,26 +19,26 @@ public class Pay {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_pago")
-    private Long id_pago;
+    private Long idPago;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_pedido", nullable = false)
     @JsonBackReference("order-pay-reference")
     private Order pedido;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_metodo", nullable = false)
     @JsonBackReference("pay-method-reference")
     private PayMethod metodoPago;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_estado_pago", nullable = false)
     @JsonBackReference("pay-status-reference")
     private PayStatus estadoPago;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "fecha_pago")
-    private Date fecha_pago;
+    private Date fechaPago;
 
     @Column(name = "monto")
     private Double monto;

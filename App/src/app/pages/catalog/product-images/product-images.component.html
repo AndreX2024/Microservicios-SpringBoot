@@ -1,0 +1,69 @@
+<div class="container my-4">
+    <h3>Imágenes del Producto: {{ product.nombre }}</h3>
+
+    <!-- Cargador de imágenes -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Subir Nueva Imagen</h5>
+            <div class="input-group mb-3">
+                <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+                <button class="btn btn-primary" type="button" (click)="uploadImage()"
+                    [disabled]="isUploading || !selectedFile">
+                    {{ isUploading ? 'Subiendo...' : 'Subir' }}
+                </button>
+            </div>
+            @if (selectedFile) {
+                <div class="text-muted">
+                    Archivo seleccionado: {{ selectedFile.name }}
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Galería de imágenes -->
+    <div class="row g-4">
+        <div *ngFor="let image of images" class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <img [src]="'http://localhost:8080' + image.urlImagen" class="img-fluid" alt="Imagen del producto">
+
+                <div class="card-body d-flex flex-column">
+                    <h6 class="card-title">Imagen ID: {{ image.idImagen }}</h6>
+
+                    <!-- Input oculto para seleccionar nueva imagen -->
+                    @if (image.idImagen === selectedImageId) {
+                    <input type="file" (change)="onImageUpdateSelected($event)" accept="image/*" #fileInput
+                        class="form-control mb-2">
+                    }
+
+                    <div class="mt-auto pt-3 d-flex justify-content-between">
+                        <button class="btn btn-sm btn-warning" (click)="enableImageUpdate(image.idImagen)">
+                            {{ image.idImagen === selectedImageId ? 'Cancelar' : 'Actualizar' }}
+                        </button>
+
+                        <button class="btn btn-sm btn-danger" (click)="deleteImage(image.idImagen)">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensaje cuando no hay imágenes -->
+        @if (images.length === 0 && !isLoading) {
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                No hay imágenes cargadas para este producto.
+            </div>
+        </div>
+        }
+
+        <!-- Loader -->
+        @if (isLoading) {
+        <div class="col-12 text-center my-4">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
+        </div>
+        }
+    </div>
+</div>

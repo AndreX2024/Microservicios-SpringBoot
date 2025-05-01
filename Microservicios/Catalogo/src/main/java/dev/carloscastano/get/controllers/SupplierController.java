@@ -1,11 +1,12 @@
 package dev.carloscastano.get.controllers;
 
+import dev.carloscastano.get.entities.Product;
 import dev.carloscastano.get.entities.Supplier;
-import dev.carloscastano.get.repository.SupplierRepository;
 import dev.carloscastano.get.services.ISupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,80 +14,68 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/catalog/suppliers")
+@RequestMapping("/suppliers")
 public class SupplierController {
 
     @Autowired
-    private ISupplierService service;
+    private ISupplierService supplierService;
 
-    @Autowired
-    private SupplierRepository supplierRepository;
-
-
-    // Métodos GET
     @GetMapping
-    public List<Supplier> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<Supplier>> getAllSuppliers() {
+        return new ResponseEntity<>(supplierService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{name}")
-    public Optional<Supplier> getByName(@PathVariable String name) {
-        return service.getByName(name);
+    @GetMapping("/{id}")
+    public ResponseEntity<Supplier> getSupplierById(@PathVariable Long id) {
+        Optional<Supplier> supplier = supplierService.findById(id);
+        return supplier.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<Supplier> getSupplierByNombre(@PathVariable String nombre) {
+        Optional<Supplier> supplier = supplierService.findByNombre(nombre);
+        return supplier.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
-    // Métodos POST
     @PostMapping
-    public Supplier createSupplier(@RequestBody Supplier supplier) {
-        return service.saveSupplier(supplier);
+    public ResponseEntity<Supplier> createSupplier(@Validated @RequestBody Supplier supplier) {
+        Supplier newSupplier = supplierService.save(supplier);
+        return new ResponseEntity<>(newSupplier, HttpStatus.CREATED);
     }
 
-
-    // Métodos PUT
-    @PutMapping("/{id}/update")
-    public ResponseEntity<Supplier> updateSupplier(
-            @PathVariable("id") Long id,
-            @RequestBody Supplier supplier) {
-
-        Optional<Supplier> supplierData = supplierRepository.findById(id);
-
-        if (supplierData.isPresent()) {
-            Supplier existingSupplier = supplierData.get();
-
-            // Update all fields
-            existingSupplier.setNombre(supplier.getNombre());
-            existingSupplier.setTelefono(supplier.getTelefono());
-
-            return new ResponseEntity<>(supplierRepository.save(existingSupplier), HttpStatus.ACCEPTED);
+    @PutMapping("/{id}")
+    public ResponseEntity<Supplier> updateSupplier(@PathVariable Long id, @Validated @RequestBody Supplier updatedSupplier) {
+        Optional<Supplier> existingSupplier = supplierService.findById(id);
+        if (existingSupplier.isPresent()) {
+            updatedSupplier.setIdProveedor(id);
+            Supplier savedSupplier = supplierService.save(updatedSupplier);
+            return new ResponseEntity<>(savedSupplier, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Supplier> patchSupplier(
-            @PathVariable("id") Long id,
-            @RequestBody Map<String, Object> updates) {
-
-        Optional<Supplier> supplierData = supplierRepository.findById(id);
-
-        if (supplierData.isPresent()) {
-            Supplier existingSupplier = supplierData.get();
-
-            // Update only provided fields
-            if (updates.containsKey("nombre")) {
-                existingSupplier.setNombre((String) updates.get("nombre"));
-            }
-            if (updates.containsKey("telefono")) {
-                existingSupplier.setTelefono((String) updates.get("telefono"));
-            }
-
-            return new ResponseEntity<>(service.saveSupplier(existingSupplier), HttpStatus.ACCEPTED);
+    public ResponseEntity<Supplier> partialUpdateSupplier(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Optional<Supplier> existingSupplier = supplierService.findById(id);
+        if (existingSupplier.isPresent()) {
+            Supplier supplierToUpdate = existingSupplier.get();
+            Supplier updatedSupplier = supplierService.partialUpdate(supplierToUpdate, updates);
+            return new ResponseEntity<>(updatedSupplier, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSupplier(@PathVariable Long id) {
+        if (supplierService.findById(id).isPresent()) {
+            supplierService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
-

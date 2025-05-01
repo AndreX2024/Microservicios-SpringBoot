@@ -3,7 +3,7 @@ import { Role } from "./Role";
 
 export interface User {
     idUsuario: number,
-    documento: string,
+    documento: number,
     nombre: string,
     apellido: string,
     email: string,

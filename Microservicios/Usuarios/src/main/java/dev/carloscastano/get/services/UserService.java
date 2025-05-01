@@ -1,23 +1,24 @@
 package dev.carloscastano.get.services;
 
 import dev.carloscastano.get.entities.Address;
-import dev.carloscastano.get.entities.Role;
 import dev.carloscastano.get.entities.User;
 import dev.carloscastano.get.repository.AddressRepository;
 import dev.carloscastano.get.repository.RoleRepository;
 import dev.carloscastano.get.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     @Autowired
     private AddressRepository addressRepository;
@@ -26,36 +27,53 @@ public class UserService implements IUserService {
     private RoleRepository roleRepository;
 
     @Override
-    public List<User> getAll() {
-        return (List<User>) repository.findAll();
+    public List<User> findAll() {
+        return (List<User>) userRepository.findAll();
     }
 
     @Override
-    public Optional<User> getUserByDocumento(Long documento) {
-        return repository.findByDocumento(documento);
+    public Optional<User> findById(Long id) {
+        return userRepository.findById(id);
     }
 
     @Override
-    public Optional<List<Address>> getUserAddresses(Long id) {
-        return repository.findById(id).map(User::getDirecciones);
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
-    public List<Role> getRoles() {
-        return (List<Role>) roleRepository.findAll();  // o alguna lógica para obtener los roles
+    @Override
+    public Optional<User> findByDocumento(Long documento) {
+        return userRepository.findByDocumento(documento);
     }
 
-
     @Override
-    public User createUser(@RequestBody User user) { return repository.save(user); }
+    public List<Address> findAddressesByUserId(Long userId) {
+        return addressRepository.findByUsuario_IdUsuario(userId);
+    }
 
+    //Métodos POST
     @Override
-    public Address addAddressUser(Long documentoUsuario, Address direccion) {
-        User usuario = repository.findByDocumento(documentoUsuario).orElse(null);
-        if (usuario != null){
-            direccion.setUsuario(usuario);
-            return addressRepository.save(direccion);
-        }
-        return null;
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    //Métodos PATCH
+    @Override
+    public User partialUpdate(User user, Map<String, Object> updates) {
+        updates.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(User.class, key);
+            if (field != null) {
+                field.setAccessible(true);
+                ReflectionUtils.setField(field, user, value);
+            }
+        });
+        return userRepository.save(user);
+    }
+
+    //Métodos DELETE
+    @Override
+    public void deleteById(Long id) {
+        userRepository.deleteById(id);
     }
 
 }

@@ -1,14 +1,15 @@
 package dev.carloscastano.get.controllers;
 
 import dev.carloscastano.get.entities.OrderDetails;
-import dev.carloscastano.get.repository.OrderDetailsRepository;
 import dev.carloscastano.get.services.IOrderDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -16,63 +17,68 @@ import java.util.Optional;
 public class OrderDetailsController {
 
     @Autowired
-    private IOrderDetailsService service;
+    private IOrderDetailsService orderDetailsService;
 
-    @Autowired
-    private OrderDetailsRepository orderDetailsRepository;
-
-    // Obtener detalles de un pedido específico por su ID de pedido
-    @GetMapping("/order/{idPedido}")
-    public List<OrderDetails> getOrderDetailsByOrderId(@PathVariable Long idPedido) {
-        return service.getByOrderId(idPedido);
+    // Métodos GET
+    @GetMapping
+    public ResponseEntity<List<OrderDetails>> getAllOrderDetails() {
+        return new ResponseEntity<>(orderDetailsService.findAll(), HttpStatus.OK);
     }
 
-    // Obtener un detalle de pedido específico por su ID
-    @GetMapping("/{idDetalle}")
-    public ResponseEntity<OrderDetails> getOrderDetailsById(@PathVariable Long idDetalle) {
-        Optional<OrderDetails> orderDetails = service.getById(idDetalle);
-        return orderDetails.map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    @GetMapping("/{id}")
+    public ResponseEntity<OrderDetails> getOrderDetailsById(@PathVariable Long id) {
+        Optional<OrderDetails> orderDetails = orderDetailsService.findById(id);
+        return orderDetails.map(od -> new ResponseEntity<>(od, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping("/{idPedido}/items")
-    public OrderDetails agregarItemAlPedido(@PathVariable Long idPedido, @RequestBody OrderDetails item) {
-        return service.agregarItemAlPedido(idPedido, item);
+    @GetMapping("/order/{orderId}")
+    public ResponseEntity<List<OrderDetails>> getOrderDetailsByOrderId(@PathVariable Long orderId) {
+        List<OrderDetails> orderDetails = orderDetailsService.findByPedido_IdPedido(orderId);
+        return new ResponseEntity<>(orderDetails, HttpStatus.OK);
     }
 
+    // Métodos POST
+    @PostMapping
+    public ResponseEntity<OrderDetails> createOrderDetail(@Validated @RequestBody OrderDetails orderDetails) {
+        OrderDetails newOrderDetail = orderDetailsService.save(orderDetails);
+        return new ResponseEntity<>(newOrderDetail, HttpStatus.CREATED);
+    }
 
-
+    // Métodos PUT
     @PutMapping("/{id}")
-    public ResponseEntity<OrderDetails> updateOrderDetail(@PathVariable Long id, @RequestBody OrderDetails newDetail) {
-        Optional<OrderDetails> existingDetail = service.getById(id);
-        if (existingDetail.isPresent()) {
-            OrderDetails detail = existingDetail.get();
-            detail.setCantidad(newDetail.getCantidad());
-            detail.setPrecioUnitario(newDetail.getPrecioUnitario());
-            detail.setIdProducto(newDetail.getIdProducto());
-            detail.setIdColor(newDetail.getIdColor());
-            detail.setIdTalla(newDetail.getIdTalla());
-            return new ResponseEntity<>(orderDetailsRepository.save(detail), HttpStatus.OK);
+    public ResponseEntity<OrderDetails> updateOrderDetail(@PathVariable Long id, @Validated @RequestBody OrderDetails updatedOrderDetails) {
+        Optional<OrderDetails> existingOrderDetail = orderDetailsService.findById(id);
+        if (existingOrderDetail.isPresent()) {
+            updatedOrderDetails.setIdDetalle(id);
+            OrderDetails savedOrderDetail = orderDetailsService.save(updatedOrderDetails);
+            return new ResponseEntity<>(savedOrderDetail, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    // Métodos PATCH
     @PatchMapping("/{id}")
-    public ResponseEntity<OrderDetails> patchOrderDetail(@PathVariable Long id, @RequestBody OrderDetails details) {
-        Optional<OrderDetails> optionalDetail = service.getById(id);
-        if (optionalDetail.isPresent()) {
-            OrderDetails detail = optionalDetail.get();
-            if (details.getCantidad() != null) detail.setCantidad(details.getCantidad());
-            if (details.getPrecioUnitario() != null) detail.setPrecioUnitario(details.getPrecioUnitario());
-            if (details.getIdProducto() != null) detail.setIdProducto(details.getIdProducto());
-            if (details.getIdColor() != null) detail.setIdColor(details.getIdColor());
-            if (details.getIdTalla() != null) detail.setIdTalla(details.getIdTalla());
-            return new ResponseEntity<>(orderDetailsRepository.save(detail), HttpStatus.OK);
+    public ResponseEntity<OrderDetails> partialUpdateOrderDetail(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Optional<OrderDetails> existingOrderDetail = orderDetailsService.findById(id);
+        if (existingOrderDetail.isPresent()) {
+            OrderDetails orderDetailToUpdate = existingOrderDetail.get();
+            OrderDetails updatedOrderDetail = orderDetailsService.partialUpdate(orderDetailToUpdate, updates);
+            return new ResponseEntity<>(updatedOrderDetail, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
-
+    // Métodos DELETE
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteOrderDetail(@PathVariable Long id) {
+        if (orderDetailsService.findById(id).isPresent()) {
+            orderDetailsService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

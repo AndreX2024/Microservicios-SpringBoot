@@ -7,5 +7,9 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
+
+    //Métodos GEt
+    Optional<User> findByEmail(String email);
     Optional<User> findByDocumento(Long documento);
+
 }

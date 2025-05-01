@@ -5,7 +5,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -22,7 +22,7 @@ public class OrderStatus {
     @Column(name = "estado")
     private String estado;
 
-    @OneToMany(mappedBy = "estado", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "estado", fetch = FetchType.LAZY)
     @JsonManagedReference("order-status-reference")
     private List<Order> pedidos;
 }

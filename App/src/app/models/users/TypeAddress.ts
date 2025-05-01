@@ -1,4 +1,4 @@
 export interface TypeAddress {
-    id_tipo_direccion: number;
+    idTipoDireccion: number;
     nombreTipoDireccion: string;
 }

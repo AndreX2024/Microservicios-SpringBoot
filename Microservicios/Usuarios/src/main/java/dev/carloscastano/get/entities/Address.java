@@ -20,12 +20,14 @@ import lombok.ToString;
 public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_direccion;
+    @Column(name = "id_direccion")
+    private Long idDireccion;
 
     private String calle;
     private String ciudad;
     private String departamento;
-    private String codigo_postal;
+    @Column(name = "codigo_postal")
+    private String codigoPostal;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_usuario")

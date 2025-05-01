@@ -1,12 +1,13 @@
 package dev.carloscastano.get.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -31,14 +32,16 @@ public class Ticket {
     private String descripcion;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha_creacion;
+    @Column(name = "fecha_creacion")
+    private Date fechaCreacion;
 
     @Temporal(TemporalType.TIMESTAMP)
-    private Date fecha_cierre;
+    @Column(name = "fecha_cierre")
+    private Date fechaCierre;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_estado")
-    @JsonManagedReference
+    @JsonBackReference
     private TicketStatus estado;
 
 

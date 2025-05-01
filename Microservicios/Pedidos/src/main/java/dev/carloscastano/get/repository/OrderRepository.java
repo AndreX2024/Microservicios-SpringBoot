@@ -8,5 +8,6 @@ import java.util.List;
 
 @Repository
 public interface OrderRepository extends CrudRepository<Order, Long> {
-    List<Order> findByIdUsuario(Long idUsuario);
+    List<Order> findByIdUsuario(Long userId);
+    List<Order> findByEstado_IdEstado(Long estadoId);
 }

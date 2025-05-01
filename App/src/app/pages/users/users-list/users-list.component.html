@@ -4,9 +4,6 @@
         <main class="col-md-9 col-lg-10 px-md-4 content">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Lista de Usuarios</h2>
-                <a routerLink="/users/new" class="btn btn-success">
-                    <i class="bi bi-plus-lg"></i> Nuevo Usuario
-                </a>
             </div>
             
             @if (isLoading) {
@@ -52,7 +49,7 @@
                                     <td>{{ user.apellido }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>{{ user.telefono }}</td>
-                                    <td>{{ user.rol.nombre_rol || 'Sin rol' }}</td>
+                                    <td>{{ user.rol.nombreRol || 'Sin rol' }}</td>
                                     <td>
                                         <div class="d-flex gap-2">
                                             <button [routerLink]="['/users', user.idUsuario, 'edit']" class="btn btn-sm btn-primary" title="Editar usuario">
@@ -65,11 +62,11 @@
                                                     <i class="bi bi-trash"></i> Eliminar
                                             </button>
                                             
-                                            <a [routerLink]="['/user-cart', user.idUsuario]" 
+                                            <button [routerLink]="['/user-cart', user.idUsuario]" 
                                                 class="btn btn-sm btn-info"
                                                 title="Ver carrito">
                                                 <i class="bi bi-cart"></i> Ver Carrito
-                                            </a>
+                                            </button>
                                         </div>
                                     </td>
                                 </tr>

@@ -1,11 +1,12 @@
 package dev.carloscastano.get.controllers;
 
+import dev.carloscastano.get.entities.Inventory;
 import dev.carloscastano.get.entities.Size;
-import dev.carloscastano.get.repository.SizeRepository;
 import dev.carloscastano.get.services.ISizeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,76 +14,68 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("catalog/sizes")
+@RequestMapping("/sizes")
 public class SizeController {
 
     @Autowired
-    private ISizeService service;
+    private ISizeService sizeService;
 
-    @Autowired
-    private SizeRepository sizeRepository;
-
-
-    // Métodos GET
     @GetMapping
-    public List<Size> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<Size>> getAllSizes() {
+        return new ResponseEntity<>(sizeService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{name}")
-    public Optional<Size> getByName(@PathVariable String name) {
-        return service.getByName(name);
+    @GetMapping("/{id}")
+    public ResponseEntity<Size> getSizeById(@PathVariable Long id) {
+        Optional<Size> size = sizeService.findById(id);
+        return size.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<Size> getSizeByNombre(@PathVariable String nombre) {
+        Optional<Size> size = sizeService.findByNombre(nombre);
+        return size.map(s -> new ResponseEntity<>(s, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
-    // Métodos POST
     @PostMapping
-    public Size createSize(@RequestBody Size size) {
-        return service.saveSize(size);
+    public ResponseEntity<Size> createSize(@Validated @RequestBody Size size) {
+        Size newSize = sizeService.save(size);
+        return new ResponseEntity<>(newSize, HttpStatus.CREATED);
     }
 
-
-    // Métodos PUT
-    @PutMapping("/{id}/update")
-    public ResponseEntity<Size> updateSize(
-            @PathVariable("id") Long id,
-            @RequestBody Size size) {
-
-        Optional<Size> sizeData = sizeRepository.findById(id);
-
-        if (sizeData.isPresent()) {
-            Size existingSize = sizeData.get();
-
-            // Update all fields
-            existingSize.setNombre(size.getNombre());
-
-            return new ResponseEntity<>(sizeRepository.save(existingSize), HttpStatus.ACCEPTED);
+    @PutMapping("/{id}")
+    public ResponseEntity<Size> updateSize(@PathVariable Long id, @Validated @RequestBody Size updatedSize) {
+        Optional<Size> existingSize = sizeService.findById(id);
+        if (existingSize.isPresent()) {
+            updatedSize.setIdTalla(id);
+            Size savedSize = sizeService.save(updatedSize);
+            return new ResponseEntity<>(savedSize, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
-
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Size> patchSize(
-            @PathVariable("id") Long id,
-            @RequestBody Map<String, Object> updates) {
-
-        Optional<Size> sizeData = sizeRepository.findById(id);
-
-        if (sizeData.isPresent()) {
-            Size existingSize = sizeData.get();
-
-            // Update only provided fields
-            if (updates.containsKey("nombre")) {
-                existingSize.setNombre((String) updates.get("nombre"));
-            }
-
-            return new ResponseEntity<>(service.saveSize(existingSize), HttpStatus.ACCEPTED);
+    public ResponseEntity<Size> partialUpdateSize(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Optional<Size> existingSize = sizeService.findById(id);
+        if (existingSize.isPresent()) {
+            Size sizeToUpdate = existingSize.get();
+            Size updatedSize = sizeService.partialUpdate(sizeToUpdate, updates);
+            return new ResponseEntity<>(updatedSize, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteSize(@PathVariable Long id) {
+        if (sizeService.findById(id).isPresent()) {
+            sizeService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

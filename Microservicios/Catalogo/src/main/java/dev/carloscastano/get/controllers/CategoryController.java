@@ -1,11 +1,12 @@
 package dev.carloscastano.get.controllers;
 
 import dev.carloscastano.get.entities.Category;
-import dev.carloscastano.get.repository.CategoryRepository;
+import dev.carloscastano.get.entities.Product;
 import dev.carloscastano.get.services.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,73 +14,68 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/catalog/categories")
+@RequestMapping("/categories")
 public class CategoryController {
 
     @Autowired
-    private ICategoryService service;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private ICategoryService categoryService;
 
     @GetMapping
-    public List<Category> getAll() {
-        return service.getAll();
+    public ResponseEntity<List<Category>> getAllCategories() {
+        return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("/{name}")
-    public Optional<Category> getByName(@PathVariable String name) {
-        return service.getByName(name);
+    @GetMapping("/{id}")
+    public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
+        Optional<Category> category = categoryService.findById(id);
+        return category.map(c -> new ResponseEntity<>(c, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping("/nombre/{nombre}")
+    public ResponseEntity<Category> getCategoryByNombre(@PathVariable String nombre) {
+        Optional<Category> category = categoryService.findByNombre(nombre);
+        return category.map(c -> new ResponseEntity<>(c, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping
-    public Category createCategory(@RequestBody Category category) {
-        return service.saveCategory(category);
+    public ResponseEntity<Category> createCategory(@Validated @RequestBody Category category) {
+        Category newCategory = categoryService.save(category);
+        return new ResponseEntity<>(newCategory, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}/update")
-    public ResponseEntity<Category> updateCategory(
-            @PathVariable("id") Long id,
-            @RequestBody Category category) {
-
-        Optional<Category> categoryData = categoryRepository.findById(id);
-
-        if (categoryData.isPresent()) {
-            Category existingCategory = categoryData.get();
-
-            // Actualizar todos los campos
-            existingCategory.setNombre(category.getNombre());
-            existingCategory.setDescripcion(category.getDescripcion());
-
-            return new ResponseEntity<>(categoryRepository.save(existingCategory), HttpStatus.ACCEPTED);
+    @PutMapping("/{id}")
+    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @Validated @RequestBody Category updatedCategory) {
+        Optional<Category> existingCategory = categoryService.findById(id);
+        if (existingCategory.isPresent()) {
+            updatedCategory.setIdCategoria(id);
+            Category savedCategory = categoryService.save(updatedCategory);
+            return new ResponseEntity<>(savedCategory, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Category> patchCategory(
-            @PathVariable("id") Long id,
-            @RequestBody Map<String, Object> updates) {
-
-        Optional<Category> categoryData = categoryRepository.findById(id);
-
-        if (categoryData.isPresent()) {
-            Category existingCategory = categoryData.get();
-
-            // Actualizar solo los campos proporcionados
-            if (updates.containsKey("nombre")) {
-                existingCategory.setNombre((String) updates.get("nombre"));
-            }
-            if (updates.containsKey("descripcion")) {
-                existingCategory.setDescripcion((String) updates.get("descripcion"));
-            }
-
-            return new ResponseEntity<>(service.saveCategory(existingCategory), HttpStatus.ACCEPTED);
+    public ResponseEntity<Category> partialUpdateCategory(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+        Optional<Category> existingCategory = categoryService.findById(id);
+        if (existingCategory.isPresent()) {
+            Category categoryToUpdate = existingCategory.get();
+            Category updatedCategory = categoryService.partialUpdate(categoryToUpdate, updates);
+            return new ResponseEntity<>(updatedCategory, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
+        if (categoryService.findById(id).isPresent()) {
+            categoryService.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }

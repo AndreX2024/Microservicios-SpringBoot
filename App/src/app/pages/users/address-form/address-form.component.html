@@ -1,137 +1,84 @@
-<div class="container-fluid p-0 overflow-hidden">
-    <div class="row">
-        <app-sidebar class="col-md-3 col-lg-2 d-md-block"></app-sidebar>
-        <main class="col-md-9 col-lg-10 px-md-4 content">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h2>{{ isEditMode ? 'Editar Dirección' : 'Nueva Dirección' }}</h2>
-                <button class="btn btn-outline-secondary" [routerLink]="['/users', documentoUsuario, 'edit']">
-                    <i class="bi bi-arrow-left"></i> Volver
-                </button>
-            </div>
-
-            @if (isLoading) {
-                <div class="text-center my-5">
-                    <div class="spinner-border text-primary" role="status">
-                        <span class="visually-hidden">Cargando...</span>
-                    </div>
-                    <p class="mt-2">Cargando {{ isEditMode ? 'dirección' : 'tipos de dirección' }}...</p>
-                </div>
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label for="tipoDireccionId" class="form-label">Tipo de Dirección</label>
+        <select class="form-select" id="tipoDireccionId" formControlName="tipoDireccionId"
+            [class.is-invalid]="addressForm.get('tipoDireccionId')?.invalid && addressForm.get('tipoDireccionId')?.touched">
+            <option value="0" disabled selected>Seleccione un tipo...</option>
+            @for (type of addressTypes; track type.idTipoDireccion) {
+            <option [value]="type.idTipoDireccion">{{ type.nombreTipoDireccion }}</option>
             }
-            @else {
-                <form [formGroup]="addressForm" (ngSubmit)="onSubmit()" class="card shadow">
-                    <div class="card-body">
-                        <div class="row g-3">
-                            <!-- Campo: Tipo de Dirección -->
-                            <div class="col-12">
-                                <label for="tipoDireccionId" class="form-label">Tipo de Dirección</label>
-                                <select class="form-select" 
-                                        id="tipoDireccionId" 
-                                        formControlName="tipoDireccionId"
-                                        [class.is-invalid]="tipoDireccionId?.get('tipoDireccionId')?.invalid && tipoDireccionId?.get('tipoDireccionId')?.touched ?? false">
-                                    <option value="0" disabled selected>Seleccione un tipo...</option>
-                                    @for (type of addressTypes; track type.id_tipo_direccion) {
-                                        <option [value]="type.id_tipo_direccion">{{ type.nombreTipoDireccion }}</option>
-                                    }
-                                </select>
-                                @if (tipoDireccionId?.hasError('required') && tipoDireccionId?.touched) {
-                                    <div class="invalid-feedback">Debe seleccionar un tipo de dirección</div>
-                                }
-                            </div>
+        </select>
 
-                            <!-- Campo: Calle -->
-                            <div class="col-md-6">
-                                <label for="calle" class="form-label">Calle</label>
-                                <input type="text" 
-                                    class="form-control" 
-                                    id="calle" 
-                                    formControlName="calle"
-                                    [class.is-invalid]="calle?.invalid && calle?.touched"
-                                    placeholder="Ej: Carrera 12 # 34-56">
-                                @if (calle?.hasError('required') && calle?.touched) {
-                                    <div class="invalid-feedback">La calle es requerida</div>
-                                }
-                                @if (calle?.hasError('maxlength')) {
-                                    <div class="invalid-feedback">Máximo 100 caracteres</div>
-                                }
-                            </div>
-
-                            <!-- Campo: Ciudad -->
-                            <div class="col-md-6">
-                                <label for="ciudad" class="form-label">Ciudad</label>
-                                <input type="text" 
-                                    class="form-control" 
-                                    id="ciudad" 
-                                    formControlName="ciudad"
-                                    [class.is-invalid]="ciudad?.invalid && ciudad?.touched"
-                                    placeholder="Ej: Bogotá">
-                                @if (ciudad?.hasError('required') && ciudad?.touched) {
-                                    <div class="invalid-feedback">La ciudad es requerida</div>
-                                }
-                                @if (ciudad?.hasError('maxlength')) {
-                                    <div class="invalid-feedback">Máximo 50 caracteres</div>
-                                }
-                            </div>
-
-                            <!-- Campo: Departamento -->
-                            <div class="col-md-6">
-                                <label for="departamento" class="form-label">Departamento</label>
-                                <input type="text" 
-                                    class="form-control" 
-                                    id="departamento" 
-                                    formControlName="departamento"
-                                    [class.is-invalid]="departamento?.invalid && departamento?.touched"
-                                    placeholder="Ej: Cundinamarca">
-                                @if (departamento?.hasError('required') && departamento?.touched) {
-                                    <div class="invalid-feedback">El departamento es requerido</div>
-                                }
-                                @if (departamento?.hasError('maxlength')) {
-                                    <div class="invalid-feedback">Máximo 50 caracteres</div>
-                                }
-                            </div>
-
-                            <!-- Campo: Código Postal -->
-                            <div class="col-md-6">
-                                <label for="codigo_postal" class="form-label">Código Postal</label>
-                                <input type="text" 
-                                    class="form-control" 
-                                    id="codigo_postal" 
-                                    formControlName="codigo_postal"
-                                    [class.is-invalid]="codigo_postal?.invalid && codigo_postal?.touched"
-                                    placeholder="Ej: 110231">
-                                @if (codigo_postal?.hasError('required') && codigo_postal?.touched) {
-                                    <div class="invalid-feedback">El código postal es requerido</div>
-                                }
-                                @if (codigo_postal?.hasError('pattern')) {
-                                    <div class="invalid-feedback">Debe tener 5 o 6 dígitos</div>
-                                }
-                            </div>
-                        </div>
-
-                        <!-- Botones de Acción -->
-                        <div class="d-flex justify-content-end gap-2 mt-4">
-                            <button type="button" 
-                                    class="btn btn-secondary" 
-                                    [routerLink]="['/users', documentoUsuario, 'edit']"
-                                    [disabled]="isSaving">
-                                Cancelar
-                            </button>
-                            <button type="submit" 
-                                    class="btn btn-primary" 
-                                    [disabled]="isSaving || addressForm.invalid">
-                                @if (isSaving) {
-                                    <span class="spinner-border spinner-border-sm" 
-                                        role="status" 
-                                        aria-hidden="true"></span>
-                                    Guardando...
-                                } @else {
-                                    <i class="bi bi-save me-2"></i>
-                                    {{ isEditMode ? 'Actualizar' : 'Guardar' }}
-                                }
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            }
-        </main>
+        @if (addressForm.get('tipoDireccionId')?.hasError('required') &&
+        addressForm.get('tipoDireccionId')?.touched) {
+        <div class="invalid-feedback">Debe seleccionar un tipo de dirección</div>
+        }
     </div>
-</div>
+
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label for="calle" class="form-label">Calle</label>
+            <input type="text" class="form-control" id="calle" formControlName="calle"
+                [class.is-invalid]="addressForm.get('calle')?.invalid && addressForm.get('calle')?.touched"
+                placeholder="Ej: Carrera 12 # 34-56">
+            @if (addressForm.get('calle')?.hasError('required') && addressForm.get('calle')?.touched) {
+            <div class="invalid-feedback">La calle es requerida</div>
+            }
+            @if (addressForm.get('calle')?.hasError('maxlength')) {
+            <div class="invalid-feedback">Máximo 100 caracteres</div>
+            }
+        </div>
+
+        <div class="col-md-6">
+            <label for="ciudad" class="form-label">Ciudad</label>
+            <input type="text" class="form-control" id="ciudad" formControlName="ciudad"
+                [class.is-invalid]="addressForm.get('ciudad')?.invalid && addressForm.get('ciudad')?.touched"
+                placeholder="Ej: Bogotá">
+            @if (addressForm.get('ciudad')?.hasError('required') && addressForm.get('ciudad')?.touched) {
+            <div class="invalid-feedback">La ciudad es requerida</div>
+            }
+            @if (addressForm.get('ciudad')?.hasError('maxlength')) {
+            <div class="invalid-feedback">Máximo 50 caracteres</div>
+            }
+        </div>
+
+        <div class="col-md-6">
+            <label for="departamento" class="form-label">Departamento</label>
+            <input type="text" class="form-control" id="departamento" formControlName="departamento"
+                [class.is-invalid]="addressForm.get('departamento')?.invalid && addressForm.get('departamento')?.touched"
+                placeholder="Ej: Cundinamarca">
+            @if (addressForm.get('departamento')?.hasError('required') && addressForm.get('departamento')?.touched) {
+            <div class="invalid-feedback">El departamento es requerido</div>
+            }
+            @if (addressForm.get('departamento')?.hasError('maxlength')) {
+            <div class="invalid-feedback">Máximo 50 caracteres</div>
+            }
+        </div>
+
+        <div class="col-md-6">
+            <label for="codigoPostal" class="form-label">Código Postal</label>
+            <input type="text" class="form-control" id="codigoPostal" formControlName="codigoPostal"
+                [class.is-invalid]="addressForm.get('codigoPostal')?.invalid && addressForm.get('codigoPostal')?.touched"
+                placeholder="Ej: 110231">
+            @if (addressForm.get('codigoPostal')?.hasError('required') && addressForm.get('codigoPostal')?.touched) {
+            <div class="invalid-feedback">El código postal es requerido</div>
+            }
+            @if (addressForm.get('codigoPostal')?.hasError('pattern')) {
+            <div class="invalid-feedback">Debe tener 5 o 6 dígitos</div>
+            }
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <button type="button" class="btn btn-outline-secondary" (click)="cancel()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving || addressForm.invalid">
+            @if (isSaving) {
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Guardando...
+            } @else {
+            <i class="bi bi-save me-2"></i>
+            {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+            }
+        </button>
+    </div>
+</form>

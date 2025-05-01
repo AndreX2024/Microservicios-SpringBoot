@@ -1,10 +1,11 @@
 import { TypeAddress } from "./TypeAddress";
 
 export interface Address {
-    id_direccion: number;
+    idDireccion: number;
+    idUsuario: number;
     calle: string;
     ciudad: string;
     departamento: string;
-    codigo_postal: string;
+    codigoPostal: string;
     tipoDireccion: TypeAddress;
 }

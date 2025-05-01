@@ -3,13 +3,22 @@ package dev.carloscastano.get.services;
 import dev.carloscastano.get.entities.Order;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface IOrderService {
-    List<Order> getAll();
-    Optional<Order> getById(Long id);
-    Order save(Order orden);
-    List<Order> obtenerPedidoUsuario(Long idUsuario);
+    // Métodos GET
+    List<Order> findAll();
+    Optional<Order> findById(Long id);
+    List<Order> findByUserId(Long userId);
+    List<Order> findByEstado_IdEstado(Long estadoId);
 
-    Order crearPedido(Order pedido);
+    // Métodos POST
+    Order save(Order order);
+
+    // Métodos PATCH
+    Order partialUpdate(Order order, Map<String, Object> updates);
+
+    // Métodos DELETE
+    void deleteById(Long id);
 }

@@ -1,0 +1,68 @@
+<form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" class="form-control" formControlName="nombre">
+        @if (productForm.get('nombre')?.hasError('required') && productForm.get('nombre')?.touched) {
+        <div class="invalid-feedback d-block">El nombre es obligatorio.</div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <input type="text" class="form-control" formControlName="descripcion">
+        @if (productForm.get('descripcion')?.hasError('required') && productForm.get('descripcion')?.touched) {
+        <div class="invalid-feedback d-block">La descripción es obligatoria.</div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label for="categoria" class="form-label">Categoría</label>
+        <select class="form-select" formControlName="categoria" required>
+            <option *ngFor="let cat of categories" [value]="cat.idCategoria">
+                {{ cat.nombre }}
+            </option>
+        </select>
+        @if (productForm.get('categoria')?.hasError('required') && productForm.get('categoria')?.touched) {
+        <div class="invalid-feedback d-block">La categoría es obligatoria.</div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label for="proveedor" class="form-label">Proveedor</label>
+        <select class="form-select" formControlName="proveedor" required>
+            <option *ngFor="let sup of suppliers" [value]="sup.idProveedor">
+                {{ sup.nombre }}
+            </option>
+        </select>
+        @if (productForm.get('proveedor')?.hasError('required') && productForm.get('proveedor')?.touched) {
+        <div class="invalid-feedback d-block">El proveedor es obligatorio.</div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label for="precio" class="form-label">Precio</label>
+        <input type="number" class="form-control" formControlName="precio">
+        @if (productForm.get('precio')?.hasError('required') && productForm.get('precio')?.touched) {
+        <div class="invalid-feedback d-block">El precio es obligatorio.</div>
+        }
+    </div>
+
+    <div class="mb-3">
+        <label for="porcentajeDescuento" class="form-label">Porcentaje de Descuento</label>
+        <input type="number" class="form-control" formControlName="porcentajeDescuento">
+    </div>
+
+    <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" formControlName="descuentoActivo">
+        <label class="form-check-label" for="descuentoActivo">
+            ¿Tiene descuento activo?
+        </label>
+    </div>
+
+    <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-secondary" (click)="onCancel.emit()">Cancelar</button>
+        <button type="submit" class="btn btn-primary" [disabled]="isSaving">
+            {{ isSaving ? 'Guardando...' : 'Guardar' }}
+        </button>
+    </div>
+</form>

@@ -1,9 +1,10 @@
 package dev.carloscastano.get.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
@@ -15,7 +16,8 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_categoria;
+    @Column(name = "id_categoria")
+    private Long idCategoria;
 
     private String nombre;
     private String descripcion;

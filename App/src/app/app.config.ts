@@ -11,9 +11,9 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(),
     provideAnimations(),
     provideToastr({
-      timeOut: 5000,
+      timeOut: 3000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
-    }),  // 👈 Necesario para ngx-toastr
+    })
   ]
 };

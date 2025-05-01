@@ -1,12 +1,11 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import javax.persistence.*;
 import java.util.List;
 
 @Entity

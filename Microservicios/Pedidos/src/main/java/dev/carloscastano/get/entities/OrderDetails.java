@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "detalle_pedido")
@@ -20,8 +20,8 @@ public class OrderDetails {
     @Column(name = "id_detalle")
     private Long idDetalle;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_pedido")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idPedido")
     @JsonBackReference("order-details-referecence")
     private Order pedido;
 
