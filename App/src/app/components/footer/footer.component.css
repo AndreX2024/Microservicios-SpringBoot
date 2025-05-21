@@ -1,0 +1,44 @@
+/* Footer general */
+.bg-dark {
+    background-color: #2d2d2d !important;
+}
+
+/* Títulos en el footer */
+.text-uppercase.fw-semibold {
+    color: #1e90ff;
+}
+
+/* Listas */
+.list-unstyled li a:hover {
+    color: #1e90ff !important;
+    text-decoration: underline !important;
+}
+
+/* Iconos de contacto */
+.bi {
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+.bi:hover {
+    color: #1e90ff;
+}
+
+/* Separador */
+hr.bg-white {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Año dinámico */
+.text-center {
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+/* Botones redes sociales */
+.fs-5 .bi {
+    font-size: 1.5rem;
+    transition: color 0.3s ease;
+}
+.fs-5 .bi:hover {
+    color: #1e90ff;
+}

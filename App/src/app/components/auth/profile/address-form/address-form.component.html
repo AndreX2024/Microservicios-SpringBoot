@@ -1,0 +1,93 @@
+<form [formGroup]="addressForm" (ngSubmit)="onSubmit()" class="p-4 border rounded shadow-sm bg-white">
+    <h5 class="mb-4 fw-bold text-primary">Agregar / Editar Dirección</h5>
+
+    <!-- Tipo de Dirección -->
+    <div class="mb-3">
+        <label for="tipoDireccionId" class="form-label fw-semibold">Tipo de Dirección</label>
+        <select class="form-select" id="tipoDireccionId" formControlName="tipoDireccionId"
+            [class.is-invalid]="addressForm.get('tipoDireccionId')?.invalid && addressForm.get('tipoDireccionId')?.touched">
+            <option value="" disabled selected>Seleccione un tipo...</option>
+            @for (type of addressTypes; track type.idTipoDireccion) {
+            <option [value]="type.idTipoDireccion">{{ type.nombreTipoDireccion }}</option>
+            }
+        </select>
+        @if (addressForm.get('tipoDireccionId')?.hasError('required') &&
+        addressForm.get('tipoDireccionId')?.touched) {
+        <div class="invalid-feedback">Debe seleccionar un tipo de dirección</div>
+        }
+    </div>
+
+    <!-- Dirección y Ciudad -->
+    <div class="row g-3">
+        <!-- Calle -->
+        <div class="col-md-6">
+            <label for="calle" class="form-label fw-semibold">Calle</label>
+            <input type="text" class="form-control" id="calle" formControlName="calle"
+                [class.is-invalid]="addressForm.get('calle')?.invalid && addressForm.get('calle')?.touched"
+                placeholder="Ej: Carrera 12 # 34-56">
+            @if (addressForm.get('calle')?.hasError('required') && addressForm.get('calle')?.touched) {
+            <div class="invalid-feedback">La calle es requerida</div>
+            }
+            @if (addressForm.get('calle')?.hasError('maxlength')) {
+            <div class="invalid-feedback">Máximo 100 caracteres</div>
+            }
+        </div>
+
+        <!-- Ciudad -->
+        <div class="col-md-6">
+            <label for="ciudad" class="form-label fw-semibold">Ciudad</label>
+            <input type="text" class="form-control" id="ciudad" formControlName="ciudad"
+                [class.is-invalid]="addressForm.get('ciudad')?.invalid && addressForm.get('ciudad')?.touched"
+                placeholder="Ej: Bogotá">
+            @if (addressForm.get('ciudad')?.hasError('required') && addressForm.get('ciudad')?.touched) {
+            <div class="invalid-feedback">La ciudad es requerida</div>
+            }
+            @if (addressForm.get('ciudad')?.hasError('maxlength')) {
+            <div class="invalid-feedback">Máximo 50 caracteres</div>
+            }
+        </div>
+
+        <!-- Departamento -->
+        <div class="col-md-6">
+            <label for="departamento" class="form-label fw-semibold">Departamento</label>
+            <input type="text" class="form-control" id="departamento" formControlName="departamento"
+                [class.is-invalid]="addressForm.get('departamento')?.invalid && addressForm.get('departamento')?.touched"
+                placeholder="Ej: Cundinamarca">
+            @if (addressForm.get('departamento')?.hasError('required') && addressForm.get('departamento')?.touched) {
+            <div class="invalid-feedback">El departamento es requerido</div>
+            }
+            @if (addressForm.get('departamento')?.hasError('maxlength')) {
+            <div class="invalid-feedback">Máximo 50 caracteres</div>
+            }
+        </div>
+
+        <!-- Código Postal -->
+        <div class="col-md-6">
+            <label for="codigoPostal" class="form-label fw-semibold">Código Postal</label>
+            <input type="text" class="form-control" id="codigoPostal" formControlName="codigoPostal"
+                [class.is-invalid]="addressForm.get('codigoPostal')?.invalid && addressForm.get('codigoPostal')?.touched"
+                placeholder="Ej: 110231">
+            @if (addressForm.get('codigoPostal')?.hasError('required') && addressForm.get('codigoPostal')?.touched) {
+            <div class="invalid-feedback">El código postal es requerido</div>
+            }
+            @if (addressForm.get('codigoPostal')?.hasError('pattern')) {
+            <div class="invalid-feedback">Debe tener 5 o 6 dígitos</div>
+            }
+        </div>
+    </div>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-end gap-2 mt-4">
+        <button type="button" class="btn btn-outline-secondary px-4" (click)="cancel()">
+            Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary px-4" [disabled]="isSaving || addressForm.invalid">
+            @if (isSaving) {
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Guardando...
+            } @else {
+            <i class="bi bi-save me-1"></i> {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+            }
+        </button>
+    </div>
+</form>

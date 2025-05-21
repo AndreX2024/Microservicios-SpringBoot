@@ -51,6 +51,13 @@ public class PayController {
         return new ResponseEntity<>(pays, HttpStatus.OK);
     }
 
+    @GetMapping("/external/{externalId}")
+    public ResponseEntity<Pay> getPayByExternalId(@PathVariable String externalId) {
+        Optional<Pay> pay = payService.findByIdPagoExterno(externalId);
+        return pay.map(p -> new ResponseEntity<>(p, HttpStatus.OK))
+                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
     // Métodos POST
     @PostMapping
     public ResponseEntity<Pay> createPay(@Validated @RequestBody Pay pay) {

@@ -1,6 +1,7 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -13,6 +14,7 @@ import java.util.List;
 @Setter
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Color {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

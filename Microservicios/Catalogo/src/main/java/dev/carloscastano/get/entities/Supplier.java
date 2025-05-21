@@ -1,7 +1,7 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -13,6 +13,7 @@ import java.util.List;
 @Setter
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +24,6 @@ public class Supplier {
     private String telefono;
 
     @OneToMany(mappedBy = "proveedor", fetch = FetchType.LAZY)
-    @JsonManagedReference("product-supplier-reference")
+    @JsonBackReference("product-supplier-reference")
     private List<Product> productos;
 }

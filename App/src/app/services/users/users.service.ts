@@ -28,6 +28,18 @@ export class UsersService {
     );
   }
 
+  getUserByEmail(email: string): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/users/email/${email}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getUserByDocumento(documento: number): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/users/documento/${documento}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   createUser(user: User): Observable<User> {
     return this.http.post<User>(`${this.apiUrl}/users`, user).pipe(
       catchError(this.handleError)
@@ -40,8 +52,20 @@ export class UsersService {
     );
   }
 
+  partialUpdateUser(id: number, updates: any): Observable<User> {
+    return this.http.patch<User>(`${this.apiUrl}/users/${id}`, updates).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   deleteUser(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/users/${id}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getUserAddresses(userId: number): Observable<Address[]> {
+    return this.http.get<Address[]>(`${this.apiUrl}/users/${userId}/addresses`).pipe(
       catchError(this.handleError)
     );
   }
@@ -49,6 +73,12 @@ export class UsersService {
   // Métodos para Direcciones
   getAddressById(addressId: number): Observable<Address> {
     return this.http.get<Address>(`${this.apiUrl}/addresses/${addressId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getAddressesByUserId(userId: number): Observable<Address[]> {
+    return this.http.get<Address[]>(`${this.apiUrl}/addresses/user/${userId}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -65,14 +95,14 @@ export class UsersService {
     );
   }
 
-  deleteAddress(addressId: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/addresses/${addressId}`).pipe(
+  partialUpdateAddress(addressId: number, updates: any): Observable<Address> {
+    return this.http.patch<Address>(`${this.apiUrl}/addresses/${addressId}`, updates).pipe(
       catchError(this.handleError)
     );
   }
 
-  getAddressesByUserId(userId: number): Observable<Address[]> {
-    return this.http.get<Address[]>(`${this.apiUrl}/addresses/user/${userId}`).pipe(
+  deleteAddress(addressId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/addresses/${addressId}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -90,6 +120,36 @@ export class UsersService {
     );
   }
 
+  createAddressType(typeAddress: TypeAddress): Observable<TypeAddress> {
+    return this.http.post<TypeAddress>(`${this.apiUrl}/address-types`, typeAddress).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateAddressType(typeId: number, typeAddress: TypeAddress): Observable<TypeAddress> {
+    return this.http.put<TypeAddress>(`${this.apiUrl}/address-types/${typeId}`, typeAddress).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  partialUpdateAddressType(typeId: number, updates: any): Observable<TypeAddress> {
+    return this.http.patch<TypeAddress>(`${this.apiUrl}/address-types/${typeId}`, updates).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteAddressType(typeId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/address-types/${typeId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getAddressesByAddressTypeId(typeId: number): Observable<Address[]> {
+    return this.http.get<Address[]>(`${this.apiUrl}/address-types/${typeId}/addresses`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
   // Métodos para Roles
   getRoles(): Observable<Role[]> {
     return this.http.get<Role[]>(`${this.apiUrl}/roles`).pipe(
@@ -99,6 +159,42 @@ export class UsersService {
 
   getRoleById(roleId: number): Observable<Role> {
     return this.http.get<Role>(`${this.apiUrl}/roles/${roleId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getRoleByNombre(nombre: string): Observable<Role> {
+    return this.http.get<Role>(`${this.apiUrl}/roles/nombre/${nombre}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  createRole(role: Role): Observable<Role> {
+    return this.http.post<Role>(`${this.apiUrl}/roles`, role).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  updateRole(roleId: number, role: Role): Observable<Role> {
+    return this.http.put<Role>(`${this.apiUrl}/roles/${roleId}`, role).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  partialUpdateRole(roleId: number, updates: any): Observable<Role> {
+    return this.http.patch<Role>(`${this.apiUrl}/roles/${roleId}`, updates).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  deleteRole(roleId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/roles/${roleId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  getUsersByRoleId(roleId: number): Observable<User[]> {
+    return this.http.get<User[]>(`${this.apiUrl}/roles/${roleId}/users`).pipe(
       catchError(this.handleError)
     );
   }

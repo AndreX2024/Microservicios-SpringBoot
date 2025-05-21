@@ -1,0 +1,120 @@
+.ticket-list-container {
+    background-color: #f8f9fa;
+}
+
+/* Spinner */
+.spinner-border.text-primary {
+    width: 2rem;
+    height: 2rem;
+    color: #1e90ff;
+}
+
+/* Alertas */
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: none;
+}
+.alert-danger .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+.alert-danger .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Tabla */
+.table thead th {
+    vertical-align: middle;
+    font-weight: bold;
+    background-color: #343a40;
+    color: white;
+}
+.table tbody tr:hover {
+    background-color: rgba(30, 144, 255, 0.05);
+}
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Badge de estado */
+.badge.bg-info {
+    background-color: #1e90ff;
+    color: white;
+    font-size: 0.875em;
+    padding: 0.35em 0.6em;
+}
+
+/* Botones de acciones */
+.btn-outline-warning {
+    color: #ffc107;
+    border-color: #ffc107;
+}
+.btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: white;
+    border-color: #ffc107;
+}
+
+.btn-outline-info {
+    color: #1e90ff;
+    border-color: #1e90ff;
+}
+.btn-outline-info:hover {
+    background-color: #1e90ff;
+    color: white;
+    border-color: #1e90ff;
+}
+
+/* Iconos vacíos */
+.bi-ticket-perforated.fs-1.text-muted.d-block.mb-2 {
+    font-size: 2rem !important;
+    color: #6c757d !important;
+}
+
+/* Modales */
+.modal-content {
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+.modal-header.bg-warning {
+    background-color: #ffc107 !important;
+    color: #212529;
+    font-weight: bold;
+}
+
+.modal-header.bg-info {
+    background-color: #1e90ff !important;
+    color: white;
+    font-weight: bold;
+}
+
+.modal-footer.bg-light {
+    background-color: #f8f9fa;
+}
+
+.form-select.form-select-sm {
+    border-radius: 0.5rem;
+    padding: 0.45rem 0.75rem;
+}
+.form-select:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+}
+
+/* Botón enviar mensaje */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    color: white;
+}
+.btn-success:hover {
+    background-color: #218838;
+}
+.btn-success:disabled {
+    background-color: #a7dba5;
+    cursor: not-allowed;
+}

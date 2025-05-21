@@ -8,6 +8,7 @@ import dev.carloscastano.get.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -25,6 +26,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private RoleRepository roleRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public List<User> findAll() {
@@ -54,6 +58,9 @@ public class UserService implements IUserService {
     //Métodos POST
     @Override
     public User save(User user) {
+        if (user.getContraseña() != null && !user.getContraseña().isEmpty()) {
+            user.setContraseña(passwordEncoder.encode(user.getContraseña()));
+        }
         return userRepository.save(user);
     }
 
@@ -64,6 +71,12 @@ public class UserService implements IUserService {
             Field field = ReflectionUtils.findField(User.class, key);
             if (field != null) {
                 field.setAccessible(true);
+
+                // Si es el campo contraseña, encriptamos
+                if ("contraseña".equals(key) && value instanceof String) {
+                    value = passwordEncoder.encode((String) value);
+                }
+
                 ReflectionUtils.setField(field, user, value);
             }
         });

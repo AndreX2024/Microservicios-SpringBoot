@@ -14,6 +14,7 @@ import java.util.List;
 @Setter
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,12 +25,10 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_categoria", nullable = false)
-    @JsonBackReference("product-category-reference")
     private Category categoria;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_proveedor", nullable = false)
-    @JsonBackReference("product-supplier-reference")
     private Supplier proveedor;
 
     @OneToMany(mappedBy = "producto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)

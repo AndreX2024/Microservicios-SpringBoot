@@ -1,0 +1,59 @@
+/* Fondo del formulario */
+.bg-white {
+    background-color: #ffffff !important;
+}
+
+/* Formulario */
+form {
+    border-radius: 10px;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.05);
+}
+
+/* Etiquetas */
+.form-label.fw-semibold {
+    font-weight: 600;
+    color: #343a40;
+}
+
+/* Selects y inputs */
+.form-control,
+.form-select {
+    border-radius: 0.5rem;
+    padding: 0.65rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+}
+.form-control:focus,
+.form-select:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+}
+
+/* Botón primario */
+.btn-primary {
+    background-color: #1e90ff;
+    border: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+.btn-primary:hover {
+    background-color: #1976d2;
+}
+
+/* Botón secundario */
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+    border-color: #6c757d;
+}
+
+/* Spinner */
+.spinner-border.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    vertical-align: middle;
+}

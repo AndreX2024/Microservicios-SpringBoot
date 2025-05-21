@@ -1,0 +1,153 @@
+<div class="ticket-list-container container-fluid p-0 overflow-hidden">
+    <div class="row">
+        <app-sidebar class="col-md-3 col-lg-2 d-md-block"></app-sidebar>
+        <main class="col-md-9 col-lg-10 px-md-4 content py-4">
+            <!-- Encabezado -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold">Tickets de Soporte</h2>
+            </div>
+
+            <!-- Loader -->
+            @if (isLoading) {
+            <div class="text-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-2">Cargando tickets...</p>
+            </div>
+            }
+
+            <!-- Error -->
+            @else if (error) {
+            <div class="alert alert-danger d-flex align-items-center justify-content-between p-3 mb-4">
+                <div>{{ error }}</div>
+                <button class="btn btn-sm btn-outline-danger" (click)="loadAllTickets()">
+                    <i class="bi bi-arrow-clockwise me-1"></i> Reintentar
+                </button>
+            </div>
+            }
+
+            <!-- Tabla -->
+            @else {
+            <div class="table-responsive shadow-sm rounded-3 overflow-hidden">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>ID Ticket</th>
+                            <th>Usuario</th>
+                            <th>Asunto</th>
+                            <th>Estado</th>
+                            <th>Fecha Creación</th>
+                            <th>Fecha Cierre</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (ticket of tickets; track ticket.idTicket) {
+                        <tr>
+                            <td>{{ ticket.idTicket }}</td>
+                            <td>{{ ticket.idUsuario }}</td>
+                            <td>{{ ticket.asunto }}</td>
+                            <td>
+                                <span class="badge bg-info text-dark">{{ ticket.estado.nombreEstado }}</span>
+                            </td>
+                            <td>{{ ticket.fechaCreacion | date:'dd/MM/yyyy HH:mm' }}</td>
+                            <td>
+                                {{ ticket.fechaCierre ? (ticket.fechaCierre | date:'dd/MM/yyyy HH:mm') : 'No se ha cerrado' }}
+                            </td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-sm btn-outline-warning"
+                                        (click)="openChangeStatusModal(ticket)">
+                                        <i class="bi bi-arrow-repeat me-1"></i> Cambiar Estado
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-info"
+                                        (click)="viewMessages(ticket.idTicket!)">
+                                        <i class="bi bi-chat-left-text me-1"></i> Ver Mensajes
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        } @empty {
+                        <tr>
+                            <td colspan="7" class="text-center py-4">
+                                <i class="bi bi-ticket-perforated fs-1 text-muted d-block mb-2"></i>
+                                No hay tickets registrados.
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            }
+        </main>
+    </div>
+
+    <!-- Modal - Cambiar estado -->
+    <div class="modal fade" id="changeStatusModal" tabindex="-1" aria-labelledby="changeStatusModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow-sm">
+                <div class="modal-header bg-warning text-white">
+                    <h5 class="modal-title" id="changeStatusModalLabel">
+                        Cambiar Estado del Ticket #{{ selectedTicket?.idTicket }}
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="statusSelect" class="form-label fw-semibold">Selecciona un nuevo estado:</label>
+                        <select class="form-select form-select-sm" id="statusSelect" [(ngModel)]="selectedStatusId">
+                            @for (status of allTicketStatuses; track status.idEstado) {
+                            <option [value]="status.idEstado">{{ status.nombreEstado }}</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-warning" (click)="saveNewStatus()">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal - Ver mensajes -->
+    <div class="modal fade" id="messagesModal" tabindex="-1" aria-labelledby="messagesModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-0 shadow-sm">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title">Mensajes del Ticket #{{ selectedTicketId }}</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if (selectedTicketMessages.length === 0) {
+                    <p class="text-muted text-center">No hay mensajes aún.</p>
+                    } @else {
+                    <ul class="list-group list-group-flush mb-3">
+                        @for (message of selectedTicketMessages; track message.idMensaje) {
+                        <li class="list-group-item py-3">
+                            <small class="text-muted">{{ message.fechaEnvio | date:'dd/MM/yyyy HH:mm' }}</small>
+                            <p class="mb-0 mt-1">{{ message.mensaje }}</p>
+                        </li>
+                        }
+                    </ul>
+                    }
+
+                    <!-- Formulario para enviar mensaje -->
+                    <div class="input-group mt-3">
+                        <textarea class="form-control" rows="3" [(ngModel)]="newMessageContent"
+                            placeholder="Escribe tu mensaje aquí..."></textarea>
+                        <button class="btn btn-success" [disabled]="!newMessageContent.trim()"
+                            (click)="sendMessageFromModal()">Enviar</button>
+                    </div>
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

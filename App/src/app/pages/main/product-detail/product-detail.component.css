@@ -1,0 +1,64 @@
+.product-detail-container {
+    background-color: #f8f9fa;
+    padding: 2rem 0;
+}
+
+/* Tarjetas */
+.card.hover-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.card.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(30, 144, 255, 0.15);
+}
+
+/* Imágenes de galería */
+img[alt="Producto"] {
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Botones de tallas y colores */
+.btn-outline-secondary {
+    border-radius: 20px;
+    padding: 0.4rem 0.8rem;
+    transition: all 0.3s ease;
+}
+.btn-outline-secondary:hover {
+    background-color: #1e90ff;
+    color: white;
+    border-color: #1e90ff;
+}
+.btn-outline-secondary.active {
+    background-color: #1e90ff;
+    color: white;
+    border-color: #1e90ff;
+}
+
+/* Botones principales */
+.btn-primary {
+    background-color: #1e90ff;
+    border: none;
+    font-weight: bold;
+}
+.btn-primary:hover {
+    background-color: #1976d2;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    font-weight: bold;
+}
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Scroll horizontal en miniaturas */
+.overflow-auto::-webkit-scrollbar {
+    height: 8px;
+}
+.overflow-auto::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}

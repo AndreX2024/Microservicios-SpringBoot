@@ -1,0 +1,42 @@
+<div class="login-container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card shadow-lg border-0 rounded-3 p-4 w-100" style="max-width: 450px;">
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-primary">Iniciar Sesión</h2>
+            <p class="text-muted">Bienvenido de vuelta, ingresa tus credenciales.</p>
+        </div>
+
+        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+            <!-- Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label fw-semibold">Email</label>
+                <input type="email" id="email" name="email" [(ngModel)]="model.email" required #email="ngModel"
+                    class="form-control form-control-lg" placeholder="tu@email.com">
+                @if (email.touched && email.invalid) {
+                <small class="text-danger">El email es requerido</small>
+                }
+            </div>
+
+            <!-- Contraseña -->
+            <div class="mb-3">
+                <label for="password" class="form-label fw-semibold">Contraseña</label>
+                <input type="password" id="password" name="password" [(ngModel)]="model.password" required
+                    class="form-control form-control-lg" placeholder="••••••••">
+            </div>
+
+            <!-- Recordar sesión -->
+            <div class="d-flex justify-content-between mb-4">
+                <a href="#" class="text-decoration-none text-primary fw-medium">¿Olvidaste tu contraseña?</a>
+            </div>
+
+            <!-- Botón -->
+            <button type="submit" class="btn btn-primary btn-lg w-100">
+                Iniciar Sesión
+            </button>
+
+            <!-- Registro -->
+            <div class="text-center mt-3">
+                <p class="mb-0">¿No tienes cuenta? <a routerLink="/signup" class="text-decoration-none text-primary fw-medium">Regístrate</a></p>
+            </div>
+        </form>
+    </div>
+</div>

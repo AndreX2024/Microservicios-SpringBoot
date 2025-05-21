@@ -1,0 +1,50 @@
+/* Modal general */
+.modal-content {
+    border-radius: 1rem;
+}
+
+/* Header del modal */
+.modal-header {
+    background-color: #2D2D2D !important;
+    color: white;
+}
+
+/* Botón de cerrar */
+.btn-close-white .btn-close:not([disabled]):not(.disabled) {
+    filter: invert(1);
+}
+
+/* Tarjetas */
+.card-header.bg-primary {
+    background-color: #1e90ff !important;
+    color: white;
+    font-weight: bold;
+}
+
+/* Badge de estado */
+.badge.bg-info {
+    background-color: #1e90ff;
+    color: white;
+}
+
+/* Total destacado */
+.text-success.fs-5 {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* Tabla de productos */
+.table thead th {
+    background-color: #f1f3f5;
+    color: #343a40;
+    font-weight: bold;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(30, 144, 255, 0.05);
+}
+
+/* Footer del modal */
+.modal-footer {
+    background-color: #f8f9fa;
+}

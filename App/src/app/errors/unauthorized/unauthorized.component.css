@@ -1,0 +1,35 @@
+.error-container {
+    background-color: #f8f9fa;
+    color: #343a40;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Icono animado */
+.bi-shield-lock-fill {
+    font-size: 4rem;
+    color: #dc3545;
+    transition: transform 0.3s ease;
+}
+.bi-shield-lock-fill:hover {
+    transform: rotate(10deg);
+}
+
+/* Botón volver */
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+}
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+    border-color: #6c757d;
+}

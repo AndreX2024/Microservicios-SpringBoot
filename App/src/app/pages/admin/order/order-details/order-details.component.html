@@ -1,0 +1,100 @@
+<div class="order-details-container container-fluid p-0 overflow-hidden">
+    <div class="row">
+        <app-sidebar class="col-md-3 col-lg-2 d-md-block"></app-sidebar>
+        <main class="col-md-9 col-lg-10 px-md-4 content py-4">
+            <!-- Encabezado -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold">Detalles del Pedido #{{ orderId }}</h2>
+                <a routerLink="/orders" class="btn btn-outline-secondary px-3">
+                    <i class="bi bi-arrow-left me-2"></i> Volver
+                </a>
+            </div>
+
+            <!-- Loader -->
+            @if (isLoading) {
+            <div class="text-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-2">Cargando detalles del pedido...</p>
+            </div>
+            }
+
+            <!-- Error -->
+            @else if (error) {
+            <div class="alert alert-danger text-center my-5">
+                {{ error }}
+            </div>
+            }
+
+            <!-- Contenido -->
+            @else {
+            <!-- Datos del Pedido -->
+            <div class="card shadow-sm border-0 rounded-3 mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Datos del Pedido</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <p><strong>ID Pedido:</strong> {{ order?.idPedido }}</p>
+                            <p><strong>Fecha:</strong> {{ order?.fecha | date:'dd/MM/yyyy HH:mm' }}</p>
+                            <p><strong>Estado:</strong>
+                                <span class="badge bg-info text-dark ms-2">{{ order?.estado?.estado }}</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>ID Usuario:</strong> {{ order?.idUsuario }}</p>
+                            <p><strong>Total:</strong> <span class="text-success fs-5">${{ total }}</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Productos -->
+            <div class="card shadow-sm border-0 rounded-3 mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">Productos</h5>
+                </div>
+                <div class="card-body">
+                    @if (detailedItems.length > 0) {
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Talla</th>
+                                    <th>Color</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for (item of detailedItems; track $index) {
+                                <tr>
+                                    <td>{{ item.productName }}</td>
+                                    <td>{{ item.sizeName }}</td>
+                                    <td>{{ item.colorName }}</td>
+                                    <td>{{ item.quantity }}</td>
+                                    <td>${{ item.unitPrice }}</td>
+                                    <td>${{ item.totalPrice }}</td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-end mt-3">
+                        <h5 class="mb-0 fw-semibold">Total del Pedido: <span class="text-success">$ {{ total }}</span></h5>
+                    </div>
+                    } @else {
+                    <div class="alert alert-info text-center mb-0">
+                        Este pedido no contiene productos.
+                    </div>
+                    }
+                </div>
+            </div>
+            }
+        </main>
+    </div>
+</div>

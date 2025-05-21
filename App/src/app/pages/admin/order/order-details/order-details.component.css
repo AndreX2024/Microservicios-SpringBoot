@@ -1,0 +1,71 @@
+.order-details-container {
+    background-color: #f8f9fa;
+}
+
+/* Botón volver */
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+    border-color: #6c757d;
+}
+
+/* Cards */
+.card.shadow-sm {
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+}
+
+.card-header.bg-primary {
+    background-color: #1e90ff !important;
+    color: white;
+}
+
+/* Tabla */
+.table thead th {
+    vertical-align: middle;
+    font-weight: bold;
+    background-color: #f1f3f5;
+    color: #343a40;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(30, 144, 255, 0.05);
+}
+
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Estado badge */
+.badge.bg-info {
+    background-color: #1e90ff;
+    color: white;
+    font-size: 0.875em;
+    padding: 0.35em 0.6em;
+}
+
+/* Total destacado */
+.text-success.fs-5 {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+/* Alertas */
+.alert-info {
+    background-color: #cce5ff;
+    color: #004085;
+    border: none;
+    border-radius: 10px;
+}
+
+/* Spinner */
+.spinner-border.text-primary {
+    width: 2rem;
+    height: 2rem;
+    color: #1e90ff;
+}

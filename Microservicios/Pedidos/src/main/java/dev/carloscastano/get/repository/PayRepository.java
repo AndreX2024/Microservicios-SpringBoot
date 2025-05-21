@@ -12,4 +12,5 @@ public interface PayRepository extends CrudRepository<Pay, Long> {
     Optional<Pay> findByPedido_IdPedido(Long pedidoId);
     List<Pay> findByMetodoPago_IdMetodo(Long metodoId);
     List<Pay> findByEstadoPago_IdEstadoPago(Long estadoPagoId);
+    Optional<Pay> findByIdPagoExterno(String idPagoExterno);
 }

@@ -1,5 +1,7 @@
 package dev.carloscastano.get.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -15,6 +17,7 @@ import java.util.List;
 @Getter
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class TicketStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,8 +27,8 @@ public class TicketStatus {
     @Column(name = "nombre_estado")
     private String nombreEstado;
 
-    @OneToMany(mappedBy = "estado", fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "estado", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<Ticket> tickets;
 
 

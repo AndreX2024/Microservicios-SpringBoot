@@ -58,6 +58,12 @@ public class PayService implements IPayService {
     }
 
     @Override
+    public Optional<Pay> findByIdPagoExterno(String externalId) {
+        return payRepository.findByIdPagoExterno(externalId);
+    }
+
+
+    @Override
     public Pay save(Pay pay) {
         return payRepository.save(pay);
     }
@@ -94,8 +100,11 @@ public class PayService implements IPayService {
                         ReflectionUtils.setField(field, pay, pedido);
                     }
                 } else {
-                    // Si el valor no es un mapa, simplemente se asigna el valor al campo
-                    ReflectionUtils.setField(field, pay, value);
+                    if ("idPagoExterno".equals(key)) {
+                        pay.setIdPagoExterno((String) value); // Manejo directo
+                    } else {
+                        ReflectionUtils.setField(field, pay, value);
+                    }
                 }
             }
         });

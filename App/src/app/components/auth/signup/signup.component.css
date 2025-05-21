@@ -1,0 +1,58 @@
+.register-container {
+    background-color: #f8f9fa;
+    padding: 2rem;
+}
+
+.card {
+    background-color: #ffffff;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos */
+.text-primary {
+    color: #1e90ff !important;
+}
+
+.fw-bold {
+    font-weight: 700;
+}
+
+/* Inputs */
+.form-control {
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+}
+
+/* Botones */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    font-weight: bold;
+    padding: 0.75rem;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Enlaces */
+.text-decoration-none.text-primary {
+    color: #1e90ff !important;
+}
+
+.text-decoration-none.text-primary:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,8 @@
+.content-container {
+    min-height: calc(100vh - 330px);
+    padding-top: 45px;
+}
+
+.content-container+app-footer {
+    margin-top: auto;
+}

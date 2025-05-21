@@ -1,0 +1,49 @@
+/* Estilo general del grupo de entrada */
+.input-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #f8f9fa;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Botones */
+.btn-outline-primary {
+    background-color: transparent;
+    color: #1e90ff;
+    border-color: #1e90ff;
+    padding: 0.3rem 0.5rem;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.btn-outline-primary:hover {
+    background-color: #1e90ff;
+    color: white;
+    border-color: #1e90ff;
+}
+.btn-outline-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Input de cantidad */
+.form-control.text-center {
+    font-weight: bold;
+    font-size: 1rem;
+    border: 1px solid #1e90ff;
+    box-shadow: none;
+    transition: border-color 0.3s ease;
+}
+.form-control.text-center:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+}
+
+/* Iconos */
+.bi.bi-dash-lg,
+.bi.bi-plus-lg {
+    font-size: 1rem;
+    vertical-align: middle;
+}

@@ -1,0 +1,125 @@
+<div class="product-detail-container mt-5 mb-5">
+    <div class="container">
+        <div class="row g-5 align-items-center">
+            <!-- Galería de imágenes -->
+            <div class="col-md-6">
+                <img [src]="'http://localhost:8080' + selectedImage" class="img-fluid rounded shadow-sm mb-4"
+                    alt="Producto">
+
+                <div class="d-flex gap-3 overflow-auto pb-2">
+                    @for (image of images; track image.idImagen) {
+                    <div class="border rounded p-1" style="width: 90px; height: 90px;">
+                        <img [src]="'http://localhost:8080' + image.urlImagen"
+                            class="w-100 h-100 object-fit-cover"
+                            (click)="selectImage(image.urlImagen)" style="cursor: pointer; border-radius: 5px;"
+                            [class.border-primary]="selectedImage === image.urlImagen">
+                    </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Detalles del producto -->
+            <div class="col-md-6">
+                <h1 class="display-6 fw-bold mb-3">{{ product?.nombre }}</h1>
+
+                <div class="d-flex align-items-center mb-4">
+                    <span class="fs-4 text-success fw-bold">${{ product?.precio }}</span>
+                    @if (product?.descuentoActivo && product?.porcentajeDescuento) {
+                    <span class="ms-2 badge bg-warning text-dark fs-6">
+                        {{ product?.porcentajeDescuento }}% OFF
+                    </span>
+                    }
+                </div>
+
+                <!-- Mensaje de inventario vacío -->
+                @if (noInventoryMessage) {
+                <div class="alert alert-danger mt-3 shadow-sm">
+                    <i class="bi bi-exclamation-triangle-fill me-1"></i> {{ noInventoryMessage }}
+                </div>
+                } @else {
+                <!-- Colores -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Color:</label>
+                    <div class="d-flex flex-wrap gap-2">
+                        @for (inventory of inventories; track inventory.idInventario) {
+                        <button class="btn btn-outline-secondary"
+                            [class.active]="selectedColor?.idColor === inventory.color.idColor"
+                            (click)="selectColor(inventory.color)">
+                            {{ inventory.color.nombre }}
+                        </button>
+                        }
+                    </div>
+                </div>
+
+                <!-- Tallas -->
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">Talla:</label>
+                    <div class="d-flex flex-wrap gap-2">
+                        @for (inventory of inventories; track inventory.idInventario) {
+                        <button class="btn btn-outline-secondary"
+                            [class.active]="selectedSize?.idTalla === inventory.talla.idTalla"
+                            (click)="selectSize(inventory.talla)">
+                            {{ inventory.talla.nombre }}
+                        </button>
+                        }
+                    </div>
+                </div>
+                }
+
+                <!-- Botón de compra -->
+                <button class="btn btn-primary btn-lg w-100 mb-2" (click)="addToCart()"
+                    [disabled]="!selectedSize || !selectedColor">
+                    <i class="bi bi-cart-plus me-2"></i>
+                    Agregar al Carrito
+                </button>
+
+                <button class="btn btn-success btn-lg w-100" [disabled]="!selectedColor || !selectedSize"
+                    (click)="buyNow()">
+                    Comprar Ahora
+                </button>
+
+                <small class="text-muted d-block mt-3">
+                    Impuestos incluidos. Gastos de envío calculados en el carrito.
+                </small>
+
+                <hr class="my-4">
+
+                <h5 class="fw-semibold">Características</h5>
+                <p class="text-muted">{{ product?.descripcion }}</p>
+            </div>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="mt-5 alert alert-light border rounded-3">
+            <p class="mb-0">
+                <strong>NOTA:</strong> El color puede variar según el dispositivo donde lo visualices. Imagen real del producto ambientalizada.
+            </p>
+        </div>
+
+        <!-- Productos Similares -->
+        @if (similarProducts.length > 0) {
+        <section class="mt-5">
+            <h4 class="fw-bold mb-4">Productos Similares</h4>
+            <div class="row g-4">
+                @for (product of similarProducts; track product.idProducto) {
+                <div class="col-md-3 col-sm-6">
+                    <div class="card h-100 shadow-sm border-0 hover-card">
+                        <img [src]="'http://localhost:8080' + product.imageUrl" class="card-img-top"
+                            alt="{{ product.nombre }}" style="height: 220px; object-fit: cover;">
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title fw-semibold">{{ product.nombre }}</h6>
+                            <p class="card-text text-muted small">{{ product.descripcion | slice:0:60 }}...</p>
+                            <p class="card-price fs-5 fw-bold text-success">${{ product.precio }}</p>
+                            <a [routerLink]="['/products-detail/', product.idProducto ]"
+                                class="btn btn-outline-primary mt-auto rounded-pill">
+                                Ver Detalles
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+        </section>
+        }
+    </div>
+</div>

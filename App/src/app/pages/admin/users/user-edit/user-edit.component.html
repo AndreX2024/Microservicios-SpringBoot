@@ -1,0 +1,210 @@
+<div class="user-edit-container container-fluid p-0 overflow-hidden">
+    <div class="row">
+        <app-sidebar class="col-md-3 col-lg-2 d-md-block"></app-sidebar>
+        <main class="col-md-9 col-lg-10 px-md-4 content py-4">
+            <!-- Encabezado -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold">Editar Usuario</h2>
+                <button class="btn btn-outline-secondary" routerLink="/users">
+                    <i class="bi bi-arrow-left me-2"></i> Volver
+                </button>
+            </div>
+
+            <!-- Loader -->
+            @if (isLoading) {
+            <div class="text-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-2">Cargando datos del usuario...</p>
+            </div>
+            }
+
+            <!-- Error -->
+            @else if (error) {
+            <div class="alert alert-danger text-center my-5">{{ error }}</div>
+            }
+
+            <!-- Formulario -->
+            @else {
+            <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+                <!-- Información Básica -->
+                <div class="card shadow-sm border-0 rounded-3 mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">Información Básica</h5>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="row g-3">
+                            <!-- Documento -->
+                            <div class="col-md-6">
+                                <label for="documento" class="form-label fw-semibold">Documento</label>
+                                <input type="text" class="form-control form-control-lg" id="documento"
+                                    formControlName="documento"
+                                    [class.is-invalid]="userForm.get('documento')?.invalid && userForm.get('documento')?.touched">
+                                @if (userForm.get('documento')?.hasError('required')) {
+                                <small class="text-danger d-block mt-1">El documento es requerido</small>
+                                }
+                                @if (userForm.get('documento')?.hasError('pattern')) {
+                                <small class="text-danger d-block mt-1">Solo se permiten números</small>
+                                }
+                            </div>
+
+                            <!-- Rol -->
+                            <div class="col-md-6">
+                                <label for="rolId" class="form-label fw-semibold">Rol</label>
+                                <select class="form-select form-select-lg" id="rolId" formControlName="rolId"
+                                    [class.is-invalid]="userForm.get('rolId')?.invalid && userForm.get('rolId')?.touched">
+                                    <option value="" disabled selected>Seleccione un rol</option>
+                                    @for (role of roles; track role.idRol) {
+                                    <option [value]="role.idRol">{{ role.nombreRol }}</option>
+                                    }
+                                </select>
+                                @if (userForm.get('rolId')?.hasError('required')) {
+                                <small class="text-danger d-block mt-1">Debe seleccionar un rol</small>
+                                }
+                            </div>
+
+                            <!-- Nombre -->
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label fw-semibold">Nombre</label>
+                                <input type="text" class="form-control form-control-lg" id="nombre"
+                                    formControlName="nombre"
+                                    [class.is-invalid]="userForm.get('nombre')?.invalid && userForm.get('nombre')?.touched">
+                                @if (userForm.get('nombre')?.hasError('required')) {
+                                <small class="text-danger d-block mt-1">El nombre es requerido</small>
+                                }
+                            </div>
+
+                            <!-- Apellido -->
+                            <div class="col-md-6">
+                                <label for="apellido" class="form-label fw-semibold">Apellido</label>
+                                <input type="text" class="form-control form-control-lg" id="apellido"
+                                    formControlName="apellido"
+                                    [class.is-invalid]="userForm.get('apellido')?.invalid && userForm.get('apellido')?.touched">
+                                @if (userForm.get('apellido')?.hasError('required')) {
+                                <small class="text-danger d-block mt-1">El apellido es requerido</small>
+                                }
+                            </div>
+
+                            <!-- Email -->
+                            <div class="col-md-6">
+                                <label for="email" class="form-label fw-semibold">Email</label>
+                                <input type="email" class="form-control form-control-lg" id="email"
+                                    formControlName="email"
+                                    [class.is-invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched">
+                                @if (userForm.get('email')?.hasError('required')) {
+                                <small class="text-danger d-block mt-1">El email es requerido</small>
+                                }
+                                @if (userForm.get('email')?.hasError('email')) {
+                                <small class="text-danger d-block mt-1">Ingrese un email válido</small>
+                                }
+                            </div>
+
+                            <!-- Teléfono -->
+                            <div class="col-md-6">
+                                <label for="telefono" class="form-label fw-semibold">Teléfono</label>
+                                <input type="tel" class="form-control form-control-lg" id="telefono"
+                                    formControlName="telefono">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Direcciones -->
+                <div class="card shadow-sm border-0 rounded-3 mb-4">
+                    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Direcciones</h5>
+                        <!-- Botón agregar dirección -->
+                        <button type="button" class="btn btn-sm btn-light px-3" (click)="openCreateAddressModal()">
+                            <i class="bi bi-plus-lg me-1"></i> Agregar
+                        </button>
+                    </div>
+                    <div class="card-body p-4">
+                        @if (addresses.length === 0) {
+                        <div class="alert alert-info text-center py-4 rounded-3 shadow-sm">
+                            <i class="bi bi-geo-alt fs-1 text-muted d-block mb-2"></i>
+                            No hay direcciones registradas.
+                        </div>
+                        } @else {
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Tipo</th>
+                                        <th>Dirección</th>
+                                        <th>Ciudad</th>
+                                        <th>Departamento</th>
+                                        <th>Código Postal</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (address of addresses; track address.idDireccion) {
+                                    <tr>
+                                        <td>{{ address.tipoDireccion.nombreTipoDireccion }}</td>
+                                        <td>{{ address.calle }}</td>
+                                        <td>{{ address.ciudad }}</td>
+                                        <td>{{ address.departamento }}</td>
+                                        <td>{{ address.codigoPostal }}</td>
+                                        <td>
+                                            <div class="d-flex gap-2">
+                                                <button type="button" class="btn btn-sm btn-outline-primary"
+                                                    (click)="openEditAddressModal(address.idDireccion)">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger"
+                                                    (click)="deleteAddress(address.idDireccion)">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Botones Guardar/Cancelar -->
+                <div class="d-flex justify-content-end gap-2">
+                    <button type="button" class="btn btn-outline-secondary px-4 py-2" routerLink="/users">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="btn btn-primary px-4 py-2" [disabled]="isSaving">
+                        @if (isSaving) {
+                        <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        Guardando...
+                        } @else {
+                        <i class="bi bi-save me-2"></i> Guardar Cambios
+                        }
+                    </button>
+                </div>
+            </form>
+            }
+        </main>
+    </div>
+
+    <!-- Modal - Direcciones -->
+    <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content border-0 shadow-sm rounded-3">
+                <div class="modal-header bg-light border-bottom-0">
+                    <h5 class="modal-title">
+                        {{ isEditingAddress ? 'Editar Dirección' : 'Nueva Dirección' }}
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @if (showAddressModal) {
+                    <app-address-form [address]="selectedAddress"
+                        (onSave)="handleAddressSave($event)"
+                        (onCancel)="closeAddressModal()">
+                    </app-address-form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

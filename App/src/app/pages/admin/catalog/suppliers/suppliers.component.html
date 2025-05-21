@@ -1,0 +1,101 @@
+<div class="supplier-list-container container-fluid p-0 overflow-hidden">
+    <div class="row">
+        <app-sidebar class="col-md-3 col-lg-2 d-md-block"></app-sidebar>
+        <main class="col-md-9 col-lg-10 px-md-4 content py-4">
+            <app-catalog-menu></app-catalog-menu>
+
+            <!-- Encabezado -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="fw-bold">Lista de Proveedores</h2>
+                <button (click)="openCreateModal()" class="btn btn-primary px-3">
+                    <i class="bi bi-plus-lg me-2"></i> Nuevo Proveedor
+                </button>
+            </div>
+
+            <!-- Loader -->
+            @if (isLoading) {
+            <div class="text-center my-5">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Cargando...</span>
+                </div>
+                <p class="mt-2">Cargando proveedores...</p>
+            </div>
+            }
+
+            <!-- Error -->
+            @else if (error) {
+            <div class="alert alert-danger d-flex align-items-center justify-content-between p-3 mb-4">
+                <div><i class="bi bi-exclamation-triangle-fill me-2"></i>{{ error }}</div>
+                <button class="btn btn-sm btn-outline-danger" (click)="loadSuppliers()">
+                    <i class="bi bi-arrow-clockwise me-1"></i> Reintentar
+                </button>
+            </div>
+            }
+
+            <!-- Tabla -->
+            @else {
+            <div class="table-responsive shadow-sm rounded-3 overflow-hidden">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-dark text-white">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Teléfono</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (supplier of suppliers; track supplier.idProveedor) {
+                        <tr>
+                            <td>{{ supplier.idProveedor }}</td>
+                            <td>{{ supplier.nombre }}</td>
+                            <td>{{ supplier.telefono }}</td>
+                            <td>
+                                <div class="d-flex gap-2">
+                                    <button (click)="openEditModal(supplier)" class="btn btn-sm btn-outline-primary">
+                                        <i class="bi bi-pencil me-1"></i> Editar
+                                    </button>
+                                    <button (click)="deleteSupplier(supplier.idProveedor)"
+                                        class="btn btn-sm btn-outline-danger">
+                                        <i class="bi bi-trash me-1"></i> Eliminar
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        } @empty {
+                        <tr>
+                            <td colspan="4" class="text-center py-4">
+                                <i class="bi bi-truck fs-1 text-muted d-block mb-2"></i>
+                                No hay proveedores registrados.
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            }
+
+            <!-- Modal - Edición/Creación -->
+            <div class="modal fade" id="supplierModal" tabindex="-1" aria-labelledby="supplierModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content border-0 shadow-sm">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title" id="supplierModalLabel">
+                                {{ isEditing ? 'Editar Proveedor' : 'Nuevo Proveedor' }}
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @if (showModal) {
+                            <app-supplier-edit [supplier]="selectedSupplier" (onSave)="handleSave($event)"
+                                (onCancel)="closeModal()"></app-supplier-edit>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

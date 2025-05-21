@@ -1,0 +1,71 @@
+.inventory-container {
+    background-color: #f8f9fa;
+}
+
+/* Botón primario */
+.btn-primary {
+    background-color: #1e90ff;
+    border: none;
+    font-weight: bold;
+}
+.btn-primary:hover {
+    background-color: #1976d2;
+}
+
+/* Botones outline */
+.btn-outline-warning {
+    color: #ffc107;
+    border-color: #ffc107;
+}
+.btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: white;
+    border-color: #ffc107;
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+/* Tabla */
+.table thead th {
+    vertical-align: middle;
+    font-weight: bold;
+    background-color: #343a40;
+    color: white;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(30, 144, 255, 0.05);
+}
+
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Texto vacío */
+.text-muted.d-block {
+    color: #6c757d !important;
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 1rem;
+}
+
+.modal-header.bg-primary {
+    background-color: #1e90ff !important;
+    color: white;
+}
+
+/* Iconos */
+.bi {
+    font-size: 1rem;
+}

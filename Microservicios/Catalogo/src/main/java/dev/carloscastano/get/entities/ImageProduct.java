@@ -1,6 +1,7 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import jakarta.persistence.*;
@@ -11,6 +12,7 @@ import jakarta.persistence.*;
 @Setter
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ImageProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

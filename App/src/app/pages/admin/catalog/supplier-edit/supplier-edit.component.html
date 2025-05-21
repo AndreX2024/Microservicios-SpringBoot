@@ -1,0 +1,36 @@
+<form [formGroup]="supplierForm" (ngSubmit)="onSubmit()" class="p-4 bg-white rounded shadow-sm">
+    <!-- Nombre -->
+    <div class="mb-3">
+        <label for="nombre" class="form-label fw-semibold">Nombre</label>
+        <input type="text" class="form-control form-control-lg" id="nombre" formControlName="nombre"
+            placeholder="Ej: Proveedor ABC">
+        @if (supplierForm.get('nombre')?.hasError('required') && supplierForm.get('nombre')?.touched) {
+        <div class="invalid-feedback d-block">El nombre es obligatorio.</div>
+        }
+    </div>
+
+    <!-- Teléfono -->
+    <div class="mb-4">
+        <label for="telefono" class="form-label fw-semibold">Teléfono</label>
+        <input type="text" class="form-control form-control-lg" id="telefono" formControlName="telefono"
+            placeholder="Ej: +57 300 123 4567">
+        @if (supplierForm.get('telefono')?.hasError('required') && supplierForm.get('telefono')?.touched) {
+        <div class="invalid-feedback d-block">El teléfono es obligatorio.</div>
+        }
+    </div>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary px-4 py-2" (click)="onCancel.emit()">
+            Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary px-4 py-2" [disabled]="isSaving || supplierForm.invalid">
+            @if (isSaving) {
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Guardando...
+            } @else {
+            Guardar
+            }
+        </button>
+    </div>
+</form>

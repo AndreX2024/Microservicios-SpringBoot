@@ -1,0 +1,62 @@
+/* Hero Section */
+.hero-section {
+    background-color: #2d2d2d;
+    color: white;
+    position: relative;
+    z-index: 1;
+}
+
+.hero-section::after {
+    content: '';
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(to top, #ffffff, transparent);
+    z-index: -1;
+}
+
+/* Cards Hover Efecto */
+.card.hover-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.card.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(30, 144, 255, 0.2);
+}
+
+/* Títulos */
+.text-uppercase {
+    letter-spacing: 1px;
+    color: #1e90ff;
+}
+
+/* Productos */
+.product-card {
+    transition: all 0.3s ease-in-out;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    box-shadow: 0 0.5rem 1.5rem rgba(30, 144, 255, 0.15);
+}
+
+.card-img-top {
+    transition: transform 0.3s ease-in-out;
+}
+.product-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+/* Botón detalles */
+.btn-outline-primary {
+    color: #1e90ff;
+    border-color: #1e90ff;
+}
+.btn-outline-primary:hover {
+    background-color: #1e90ff;
+    color: white;
+    border-color: #1e90ff;
+}

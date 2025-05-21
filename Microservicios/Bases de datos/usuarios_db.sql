@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-03-2025 a las 23:43:28
+-- Tiempo de generación: 19-05-2025 a las 22:46:05
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -43,7 +43,8 @@ CREATE TABLE `direccion` (
 
 INSERT INTO `direccion` (`id_direccion`, `id_usuario`, `calle`, `ciudad`, `departamento`, `codigo_postal`, `id_tipo_direccion`) VALUES
 (1, 1, 'Calle 123', 'Bogotá', 'Cundinamarca', '110111', 1),
-(2, 2, 'Carrera 45', 'Medellín', 'Antioquia', '050001', 2);
+(2, 2, 'Carrera 45', 'Medellín', 'Antioquia', '050001', 2),
+(9, 5, 'Carrera 12 # 31', 'Libano', 'Tolima', '110212', 1);
 
 -- --------------------------------------------------------
 
@@ -107,7 +108,9 @@ CREATE TABLE `usuarios` (
 INSERT INTO `usuarios` (`id_usuario`, `documento`, `nombre`, `apellido`, `email`, `telefono`, `contraseña`, `id_rol`) VALUES
 (1, 38421567, 'Juan', 'Pérez', 'juan@example.com', '3001234567', 'password123', 1),
 (2, 691115496, 'Maria', 'Gomez', 'maria@example.com', '3119876543', 'password456', 1),
-(3, 822645841, 'Admin', 'Principal', 'admin@example.com', '3205551234', 'admin123', 2);
+(3, 822645841, 'Admin', 'Principal', 'admin@example.com', '3205551234', 'admin123', 2),
+(5, 6545611, 'Andres', 'Castaño', 'cliente@gmail.com', '3210001122', '$2a$10$YXSs1w3ocCpQCmSLtDUX9.Db0GfhweBo66KL4C/KGavjkUfJr0FJS', 1),
+(6, 6545611, 'Admin', 'Castaño', 'admin@gmail.com', '3101234567', '$2a$10$Wcp3KQd5zdi0x4vTYaxo2e0tRd09lO.2RhKo2RxpHu2F6mVTorzMa', 2);
 
 --
 -- Índices para tablas volcadas
@@ -148,7 +151,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `direccion`
 --
 ALTER TABLE `direccion`
-  MODIFY `id_direccion` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_direccion` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `rol`
@@ -166,7 +169,7 @@ ALTER TABLE `tipo_direccion`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id_usuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_usuario` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Restricciones para tablas volcadas

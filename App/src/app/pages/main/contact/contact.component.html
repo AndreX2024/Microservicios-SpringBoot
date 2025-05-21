@@ -1,0 +1,31 @@
+<div class="support-container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card shadow-sm border-0 rounded-3 w-100" style="max-width: 600px;">
+        <div class="card-header bg-primary text-white text-center py-4">
+            <h2 class="mb-0 fw-bold">Soporte Técnico</h2>
+            <p class="mb-0 mt-1 text-white-50">¿Tienes algún problema o pregunta? Escríbenos aquí.</p>
+        </div>
+
+        <div class="card-body p-4">
+            <form (ngSubmit)="onSubmit()" #ticketForm="ngForm">
+                <!-- Asunto -->
+                <div class="mb-3">
+                    <label for="asunto" class="form-label fw-semibold">Asunto</label>
+                    <input type="text" class="form-control form-control-lg" id="asunto" required [(ngModel)]="ticket.asunto"
+                        name="asunto" placeholder="Ej: Problema con mi pedido">
+                </div>
+
+                <!-- Descripción -->
+                <div class="mb-4">
+                    <label for="descripcion" class="form-label fw-semibold">Descripción del problema</label>
+                    <textarea class="form-control" id="descripcion" rows="5" required [(ngModel)]="ticket.descripcion"
+                        name="descripcion" placeholder="Describe tu problema..." style="resize: none;"></textarea>
+                </div>
+
+                <!-- Botón enviar -->
+                <button type="submit" class="btn btn-primary w-100 py-2 fs-5" [disabled]="!ticket.asunto || !ticket.descripcion">
+                    Enviar Ticket
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

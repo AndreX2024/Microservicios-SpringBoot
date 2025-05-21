@@ -1,0 +1,51 @@
+<form [formGroup]="inventoryForm" (ngSubmit)="onSubmit()" class="p-4 bg-white rounded shadow-sm">
+    <!-- Talla -->
+    <div class="mb-3">
+        <label for="talla" class="form-label fw-semibold">Talla</label>
+        <select class="form-select form-select-lg" id="talla" formControlName="talla" required>
+            <option value="" disabled selected>Selecciona una talla</option>
+            @for (size of sizes; track size.idTalla) {
+                <option [value]="size.idTalla">{{ size.nombre }}</option>
+            }
+            @if (sizes.length === 0) {
+                <option value="" disabled>No hay tallas disponibles</option>
+            }
+        </select>
+    </div>
+
+    <!-- Color -->
+    <div class="mb-3">
+        <label for="color" class="form-label fw-semibold">Color</label>
+        <select class="form-select form-select-lg" id="color" formControlName="color" required>
+            <option value="" disabled selected>Selecciona un color</option>
+            @for (color of colors; track color.idColor) {
+                <option [value]="color.idColor">{{ color.nombre }}</option>
+            }
+            @if (colors.length === 0) {
+                <option value="" disabled>No hay colores disponibles</option>
+            }
+        </select>
+    </div>
+
+    <!-- Stock -->
+    <div class="mb-4">
+        <label for="stock" class="form-label fw-semibold">Stock</label>
+        <input type="number" class="form-control form-control-lg" id="stock" formControlName="stock"
+            placeholder="Ej: 50 unidades" min="0">
+    </div>
+
+    <!-- Botones -->
+    <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary px-4 py-2" (click)="onCancel.emit()">
+            Cancelar
+        </button>
+        <button type="submit" class="btn btn-primary px-4 py-2" [disabled]="isSaving || inventoryForm.invalid">
+            @if (isSaving) {
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Guardando...
+            } @else {
+            Guardar
+            }
+        </button>
+    </div>
+</form>

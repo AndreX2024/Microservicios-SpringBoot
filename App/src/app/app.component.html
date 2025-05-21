@@ -1,1 +1,10 @@
-<router-outlet></router-outlet>
+@if (showHeaderFooter) {
+    <app-nav-bar class="fixed-top"></app-nav-bar>
+    <div class="content-container">
+        <router-outlet></router-outlet>
+    </div>
+    <br>
+    <app-footer></app-footer>
+} @else {
+    <router-outlet></router-outlet>
+}

@@ -1,0 +1,86 @@
+/* Navbar general */
+.navbar.bg-primary {
+    background-color: #1e90ff !important;
+    padding: 0.75rem 1rem;
+    transition: background-color 0.3s ease;
+}
+
+/* Brand */
+.navbar-brand {
+    font-size: 1.25rem;
+    color: white !important;
+    transition: color 0.3s ease;
+}
+.navbar-brand:hover {
+    color: #f8f9fa !important;
+}
+
+/* Enlaces del menú */
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+.nav-link:hover,
+.nav-link.active {
+    color: #f8f9fa !important;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+}
+
+/* Formulario de búsqueda */
+.form-control.form-control-sm {
+    border-radius: 50px;
+    padding-left: 1rem;
+    padding-right: 0.75rem;
+    width: 200px;
+    border: none;
+    outline: none;
+}
+.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+}
+
+.btn.btn-light {
+    background-color: white;
+    color: #1e90ff;
+    border: none;
+    font-weight: bold;
+}
+.btn.btn-light:hover {
+    background-color: #e6f0ff;
+}
+
+/* Badge del carrito */
+.badge.bg-danger.rounded-circle {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    transform: scale(0.9);
+}
+
+/* Dropdown */
+.dropdown-menu {
+    min-width: 180px;
+    border-radius: 0.5rem;
+    margin-top: 0.5rem;
+}
+.dropdown-item {
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+.dropdown-item:hover {
+    background-color: #e6f0ff;
+}
+.dropdown-item.text-danger:hover {
+    background-color: #fff5f5;
+}
+
+/* Iconos */
+.bi.bi-cart4.fs-5,
+.bi.bi-person-circle.fs-5 {
+    transition: transform 0.3s ease;
+}
+.bi.bi-cart4.fs-5:hover,
+.bi.bi-person-circle.fs-5:hover {
+    transform: scale(1.1);
+}

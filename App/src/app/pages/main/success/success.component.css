@@ -1,0 +1,59 @@
+.status-container {
+    background-color: #f8f9fa;
+    padding: 2rem 0;
+}
+
+.card {
+    border-radius: 1rem;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* Iconos grandes */
+.display-1 {
+    font-size: 4rem;
+}
+
+/* Botón primario */
+.btn-primary {
+    background-color: #1e90ff;
+    border: none;
+    font-weight: bold;
+}
+.btn-primary:hover {
+    background-color: #1976d2;
+}
+
+/* Botón secundario */
+.btn-outline-secondary {
+    color: #6c757d;
+    border-color: #6c757d;
+}
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Textos */
+.text-success {
+    color: #28a745 !important;
+}
+.text-danger {
+    color: #dc3545 !important;
+}
+.text-warning {
+    color: #ffc107 !important;
+}
+.text-muted {
+    color: #6c757d;
+}
+
+/* Separador */
+hr.my-4 {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}

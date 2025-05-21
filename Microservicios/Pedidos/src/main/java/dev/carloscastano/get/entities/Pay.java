@@ -42,4 +42,7 @@ public class Pay {
 
     @Column(name = "monto")
     private Double monto;
+
+    @Column(name = "id_pago_externo")
+    private String idPagoExterno;
 }

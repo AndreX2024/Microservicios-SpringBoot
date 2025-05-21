@@ -44,6 +44,11 @@ export class CatalogService {
       catchError(this.handleError)
     );
   }
+  partialUpdateCategory(id: number, updates: any): Observable<Category> {
+  return this.http.patch<Category>(`${this.apiUrl}/categories/${id}`, updates).pipe(
+    catchError(this.handleError)
+  );
+}
   deleteCategory(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/categories/${id}`).pipe(
       catchError(this.handleError)
@@ -62,6 +67,11 @@ export class CatalogService {
   }
   getProductByName(name: string): Observable<Product[]> {
     return this.http.get<Product[]>(`${this.apiUrl}/products/nombre/${name}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getProductsByCategoryId(categoryId: number): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}/products/category/${categoryId}`).pipe(
       catchError(this.handleError)
     );
   }
@@ -149,6 +159,16 @@ export class CatalogService {
       catchError(this.handleError)
     );
   }
+  getInventoryBySizeId(sizeId: number): Observable<Inventory[]> {
+    return this.http.get<Inventory[]>(`${this.apiUrl}/inventories/size/${sizeId}`).pipe(
+      catchError(this.handleError)
+    );
+  }
+  getInventoryByColorId(colorId: number): Observable<Inventory[]> {
+  return this.http.get<Inventory[]>(`${this.apiUrl}/inventories/color/${colorId}`).pipe(
+    catchError(this.handleError)
+  );
+}
   createInventory(inventory: Inventory): Observable<Inventory> {
     return this.http.post<Inventory>(`${this.apiUrl}/inventories`, inventory).pipe(
       catchError(this.handleError)
@@ -168,11 +188,11 @@ export class CatalogService {
   getProductByInventoryId(inventoryId: number): Observable<Product> {
     return this.http.get<Product>(`${this.apiUrl}/inventories/${inventoryId}/producto`);
   }
-  
+
   getColorByInventoryId(inventoryId: number): Observable<Color> {
     return this.http.get<Color>(`${this.apiUrl}/inventories/${inventoryId}/color`);
   }
-  
+
   getSizeByInventoryId(inventoryId: number): Observable<Size> {
     return this.http.get<Size>(`${this.apiUrl}/inventories/${inventoryId}/talla`);
   }

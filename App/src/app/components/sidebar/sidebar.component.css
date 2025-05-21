@@ -1,18 +1,80 @@
-.sidebar {
+/* Sidebar Desktop */
+nav.d-none.d-md-flex {
+    top: 0;
+    left: 0;
     height: 100vh;
-    background-color: #343a40;
-    color: white;
-    padding: 20px;
+    transition: background-color 0.3s ease;
 }
 
-.sidebar a {
+/* Títulos en sidebar */
+nav h4 {
     color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
 
-.sidebar a:hover {
-    background-color: #495057;
+/* Enlaces del menú */
+.nav-link {
+    color: #f8f9fa !important;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+.nav-link:hover,
+.nav-link.active {
+    background-color: rgba(30, 144, 255, 0.1);
+    color: #1e90ff !important;
+}
+
+/* Iconos del menú */
+.bi {
+    font-size: 1.25rem;
+    transition: transform 0.3s ease;
+}
+.nav-link:hover .bi {
+    transform: scale(1.1);
+}
+
+/* Botones de logout */
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    font-weight: bold;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Offcanvas - Movil */
+.offcanvas.offcanvas-start {
+    width: 280px;
+    background-color: #2d2d2d;
+}
+
+.offcanvas-header .btn-close {
+    filter: brightness(1);
+}
+
+.offcanvas-body .nav-link {
+    color: #f8f9fa !important;
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+.offcanvas-body .nav-link:hover {
+    background-color: rgba(30, 144, 255, 0.1);
+    color: #1e90ff !important;
+}
+
+.offcanvas-body hr {
+    border-top-color: #dee2e6;
+}
+
+.offcanvas-body .btn-danger {
+    background-color: #dc3545;
+    border: none;
+    font-weight: bold;
+}
+.offcanvas-body .btn-danger:hover {
+    background-color: #c82333;
 }

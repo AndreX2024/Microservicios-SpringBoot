@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-03-2025 a las 05:34:50
+-- Tiempo de generación: 19-05-2025 a las 22:42:20
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -38,7 +38,8 @@ CREATE TABLE `carrito` (
 
 INSERT INTO `carrito` (`id_carrito`, `id_usuario`) VALUES
 (1, 1),
-(2, 2);
+(2, 2),
+(3, 5);
 
 -- --------------------------------------------------------
 
@@ -50,7 +51,6 @@ CREATE TABLE `item_carrito` (
   `id_item` bigint(20) NOT NULL,
   `id_carrito` bigint(20) NOT NULL,
   `id_producto` bigint(20) NOT NULL,
-  `id_imagen` bigint(20) NOT NULL,
   `id_talla` bigint(20) DEFAULT NULL,
   `id_color` bigint(20) DEFAULT NULL,
   `cantidad` int(11) NOT NULL DEFAULT 1,
@@ -61,10 +61,10 @@ CREATE TABLE `item_carrito` (
 -- Volcado de datos para la tabla `item_carrito`
 --
 
-INSERT INTO `item_carrito` (`id_item`, `id_carrito`, `id_producto`, `id_imagen`, `id_talla`, `id_color`, `cantidad`, `precio_unitario`) VALUES
-(1, 1, 1, 1, 2, 1, 2, 120000.00),
-(2, 1, 2, 2, 3, 2, 1, 50000.00),
-(3, 2, 1, 1, 2, 3, 3, 120000.00);
+INSERT INTO `item_carrito` (`id_item`, `id_carrito`, `id_producto`, `id_talla`, `id_color`, `cantidad`, `precio_unitario`) VALUES
+(1, 1, 1, 2, 1, 2, 120000.00),
+(2, 1, 2, 3, 2, 1, 50000.00),
+(3, 2, 1, 2, 3, 3, 120000.00);
 
 --
 -- Índices para tablas volcadas
@@ -85,8 +85,7 @@ ALTER TABLE `item_carrito`
   ADD KEY `id_carrito` (`id_carrito`),
   ADD KEY `item_carrito_ibfk_2` (`id_producto`),
   ADD KEY `item_carrito_ibfk_3` (`id_talla`),
-  ADD KEY `item_carrito_ibfk_4` (`id_color`),
-  ADD KEY `item_carrito_ibfk_5` (`id_imagen`);
+  ADD KEY `item_carrito_ibfk_4` (`id_color`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -96,13 +95,13 @@ ALTER TABLE `item_carrito`
 -- AUTO_INCREMENT de la tabla `carrito`
 --
 ALTER TABLE `carrito`
-  MODIFY `id_carrito` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_carrito` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `item_carrito`
 --
 ALTER TABLE `item_carrito`
-  MODIFY `id_item` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_item` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

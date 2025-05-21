@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-03-2025 a las 05:35:05
+-- Tiempo de generación: 19-05-2025 a las 22:42:43
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,7 +39,8 @@ CREATE TABLE `categoria` (
 
 INSERT INTO `categoria` (`id_categoria`, `nombre`, `descripcion`) VALUES
 (1, 'Buzos', 'Buzos urbanos con estilo'),
-(2, 'Camisetas', 'Camisetas de algodón de alta calidad');
+(2, 'Camisetas', 'Camisetas de algodón de alta calidad'),
+(3, 'Gorras', 'Complementos de moda para todos los estilos nuevo');
 
 -- --------------------------------------------------------
 
@@ -78,8 +79,10 @@ CREATE TABLE `imagen_producto` (
 --
 
 INSERT INTO `imagen_producto` (`id_imagen`, `url_imagen`, `id_producto`) VALUES
-(1, 'https://ejemplo.com/buzo1.jpg', 1),
-(2, 'https://ejemplo.com/camiseta1.jpg', 2);
+(3, '/catalog/products/images/1d4f969c-c4f4-463d-a441-0ec3372e2059_asset 4.jpeg', 3),
+(4, '/catalog/products/images/0780cfe8-eb73-4dc9-90d1-0262030e797f_asset 2.jpeg', 3),
+(5, '/catalog/products/images/59399b0d-62e9-43f5-a939-b4dbb7722a60_asset 3.jpeg', 3),
+(7, '/catalog/products/images/06e1f003-c7e9-42e1-8c92-5aeb3b5e892e_Masiosare Studio y sus productos de diseño industrial.jpg', 1);
 
 -- --------------------------------------------------------
 
@@ -126,7 +129,10 @@ CREATE TABLE `producto` (
 
 INSERT INTO `producto` (`id_producto`, `nombre`, `descripcion`, `id_categoria`, `id_proveedor`, `precio`, `descuento_activo`, `porcentaje_descuento`) VALUES
 (1, 'Buzo Negro', 'Buzo urbano de algodón', 1, 1, 120000.00, 1, 10.00),
-(2, 'Camiseta Blanca', 'Camiseta de algodón premium', 2, 2, 50000.00, 0, 0.00);
+(2, 'Camiseta Blanca', 'Camiseta de algodón premium', 2, 2, 50000.00, 0, 0.00),
+(3, 'Gorra', 'Gorra cómoda para actividades al aire libre', 3, 1, 25000.00, 0, 0.00),
+(4, 'Gorra Nueva', 'Gorra cómoda para actividades al aire libre', 3, 1, 25000.00, 0, 0.00),
+(5, 'Gorra Nueva Nueva', 'Gorra cómoda para actividades al aire libre', 3, 1, 25000.00, 0, 0.00);
 
 -- --------------------------------------------------------
 
@@ -167,6 +173,7 @@ INSERT INTO `talla` (`id_talla`, `nombre`) VALUES
 (3, 'L'),
 (2, 'M'),
 (1, 'S'),
+(5, 'Única'),
 (4, 'XL');
 
 --
@@ -232,7 +239,7 @@ ALTER TABLE `talla`
 -- AUTO_INCREMENT de la tabla `categoria`
 --
 ALTER TABLE `categoria`
-  MODIFY `id_categoria` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_categoria` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `color`
@@ -244,7 +251,7 @@ ALTER TABLE `color`
 -- AUTO_INCREMENT de la tabla `imagen_producto`
 --
 ALTER TABLE `imagen_producto`
-  MODIFY `id_imagen` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_imagen` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de la tabla `inventario`
@@ -256,7 +263,7 @@ ALTER TABLE `inventario`
 -- AUTO_INCREMENT de la tabla `producto`
 --
 ALTER TABLE `producto`
-  MODIFY `id_producto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_producto` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `proveedor`
@@ -268,7 +275,7 @@ ALTER TABLE `proveedor`
 -- AUTO_INCREMENT de la tabla `talla`
 --
 ALTER TABLE `talla`
-  MODIFY `id_talla` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_talla` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Restricciones para tablas volcadas

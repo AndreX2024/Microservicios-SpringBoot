@@ -1,0 +1,56 @@
+.product-list-container {
+    background-color: #f8f9fa;
+    padding: 2rem 0;
+}
+
+/* Formulario de filtros */
+.form-select-sm {
+    border-radius: 0.4rem;
+    padding: 0.45rem 0.75rem;
+}
+.form-select-sm:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.2);
+}
+
+/* Cards de productos */
+.card.hover-card {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+.card.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(30, 144, 255, 0.15);
+}
+
+.card-img-top {
+    transition: transform 0.3s ease-in-out;
+}
+.card.hover-card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+/* Botones detalles */
+.btn-outline-primary {
+    color: #1e90ff;
+    border-color: #1e90ff;
+}
+.btn-outline-primary:hover {
+    background-color: #1e90ff;
+    color: white;
+    border-color: #1e90ff;
+}
+
+/* Alerta vacío */
+.alert-info {
+    background-color: #cce5ff;
+    color: #004085;
+    border: none;
+    border-radius: 0.5rem;
+}
+
+/* Loader */
+.spinner-border.text-primary {
+    width: 2rem;
+    height: 2rem;
+    color: #1e90ff;
+}

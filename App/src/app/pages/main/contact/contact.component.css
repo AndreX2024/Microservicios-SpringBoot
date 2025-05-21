@@ -1,0 +1,60 @@
+.support-container {
+    background-color: #f8f9fa;
+    padding: 2rem;
+}
+
+.card {
+    background-color: #ffffff;
+    transition: box-shadow 0.3s ease-in-out;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* Card header */
+.card-header.bg-primary {
+    background-color: #1e90ff !important;
+    color: white;
+}
+
+.card-header h2 {
+    font-size: 1.75rem;
+}
+
+/* Inputs */
+.form-control,
+.form-control:focus {
+    border-radius: 0.5rem;
+    border: 1px solid #ced4da;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #1e90ff;
+    box-shadow: 0 0 0 0.2rem rgba(30, 144, 255, 0.25);
+}
+
+/* Label */
+.form-label.fw-semibold {
+    font-weight: 600;
+    color: #343a40;
+}
+
+/* Botón principal */
+.btn-primary {
+    background-color: #1e90ff;
+    border: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease-in-out;
+}
+.btn-primary:hover {
+    background-color: #1976d2;
+}
+.btn-primary:disabled {
+    background-color: #a5c7ff;
+    cursor: not-allowed;
+}

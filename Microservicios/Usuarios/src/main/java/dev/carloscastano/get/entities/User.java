@@ -27,7 +27,7 @@ public class User {
     private String telefono;
     private String contraseña;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_rol", referencedColumnName = "id_rol")
     private Role rol;
 

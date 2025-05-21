@@ -1,0 +1,92 @@
+/* Fondo principal */
+.container-fluid {
+    background-color: #f8f9fa;
+}
+
+/* Botón primario */
+.btn-primary {
+    background-color: #1e90ff;
+    border: none;
+    font-weight: bold;
+}
+.btn-primary:hover {
+    background-color: #1976d2;
+}
+
+/* Botones outline */
+.btn-outline-primary {
+    color: #1e90ff;
+    border-color: #1e90ff;
+}
+.btn-outline-primary:hover {
+    background-color: #1e90ff;
+    color: white;
+    border-color: #1e90ff;
+}
+
+.btn-outline-info {
+    color: #17a2b8;
+    border-color: #17a2b8;
+}
+.btn-outline-info:hover {
+    background-color: #17a2b8;
+    color: white;
+    border-color: #17a2b8;
+}
+
+.btn-outline-warning {
+    color: #ffc107;
+    border-color: #ffc107;
+}
+.btn-outline-warning:hover {
+    background-color: #ffc107;
+    color: white;
+    border-color: #ffc107;
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+/* Tabla */
+.table thead th {
+    vertical-align: middle;
+    font-weight: bold;
+    background-color: #343a40;
+    color: white;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(30, 144, 255, 0.05);
+}
+
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Modal */
+.modal-content {
+    border-radius: 1rem;
+}
+
+.modal-header.bg-primary {
+    background-color: #1e90ff !important;
+    color: white;
+}
+
+.modal-header.bg-info {
+    background-color: #17a2b8 !important;
+    color: white;
+}
+
+/* Texto vacío */
+.text-muted.d-block {
+    color: #6c757d !important;
+}

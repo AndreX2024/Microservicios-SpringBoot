@@ -1,0 +1,18 @@
+<div class="input-group input-group-sm align-items-center gap-2">
+    <!-- Botón disminuir -->
+    <button class="btn btn-outline-primary" type="button" (click)="decrease()" [disabled]="quantity <= min"
+        aria-label="Disminuir cantidad">
+        <i class="bi bi-dash-lg"></i>
+    </button>
+
+    <!-- Input de cantidad -->
+    <input type="number" class="form-control text-center" [(ngModel)]="quantity" (change)="onInputChange($event)"
+        [min]="min" [max]="max ?? null" aria-label="Cantidad"
+        style="width: 60px; border-radius: 0.5rem;" readonly>
+
+    <!-- Botón aumentar -->
+    <button class="btn btn-outline-primary" type="button" (click)="increase()"
+        [disabled]="max !== null && quantity >= max" aria-label="Aumentar cantidad">
+        <i class="bi bi-plus-lg"></i>
+    </button>
+</div>

@@ -1,0 +1,61 @@
+.confirm-order-container {
+    background-color: #f8f9fa;
+    padding: 2rem;
+}
+
+/* Títulos */
+.text-primary {
+    color: #1e90ff !important;
+}
+
+.fw-bold {
+    font-weight: 700;
+}
+
+/* Tarjetas */
+.card.shadow-sm {
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.05);
+}
+
+.card-header.bg-light {
+    background-color: #f1f3f5 !important;
+    color: #343a40;
+    font-weight: 600;
+    border-bottom: 1px solid #e9ecef;
+}
+
+/* Lista de productos */
+.list-group-item {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.list-group-item:last-child {
+    border-bottom: none;
+}
+
+/* Imagen producto */
+img.rounded.shadow-sm {
+    object-fit: cover;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+/* Botón confirmar */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Alert vacío */
+.alert-info {
+    background-color: #cce5ff;
+    color: #004085;
+    border: none;
+    border-radius: 0.5rem;
+}

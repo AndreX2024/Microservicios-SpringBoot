@@ -1,0 +1,53 @@
+<footer class="bg-dark text-white pt-5 pb-4">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Logo y Descripción -->
+            <div class="col-md-4 mb-4">
+                <h5 class="text-primary fw-bold">UrbanStyle</h5>
+                <p class="mb-3">Ropa urbana moderna que define tu estilo. Encuentra lo último en tendencias streetwear.</p>
+                <!-- Redes sociales -->
+                <div class="d-flex gap-2 fs-5">
+                    <a href="#" class="text-white" title="Facebook"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-white" title="Instagram"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-white" title="Twitter"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-white" title="TikTok"><i class="bi bi-tiktok"></i></a>
+                </div>
+            </div>
+
+            <!-- Enlaces Rápidos -->
+            <div class="col-md-2 mb-4">
+                <h6 class="text-uppercase fw-semibold mb-3">Enlaces</h6>
+                <ul class="list-unstyled">
+                    <li><a href="/" class="text-white text-decoration-none d-block mb-2">Inicio</a></li>
+                    <li><a href="/products" class="text-white text-decoration-none d-block mb-2">Productos</a></li>
+                    <li><a href="/contact" class="text-white text-decoration-none d-block">Contacto</a></li>
+                </ul>
+            </div>
+
+            <!-- Categorías -->
+            <div class="col-md-2 mb-4">
+                <h6 class="text-uppercase fw-semibold mb-3">Categorías</h6>
+                <ul class="list-unstyled">
+                    @for (category of categories; track category.idCategoria) {
+                    <li><a class="text-white text-decoration-none d-block mb-2">{{ category.nombre }}</a></li>
+                    }
+                </ul>
+            </div>
+
+            <!-- Contacto -->
+            <div class="col-md-4 mb-4">
+                <h6 class="text-uppercase fw-semibold mb-3">Contacto</h6>
+                <p><i class="bi bi-geo-alt-fill me-2"></i>Calle 123, Ciudad, País</p>
+                <p><i class="bi bi-envelope-fill me-2"></i>soporte&#64;urbanstyle.com</p>
+                <p><i class="bi bi-telephone-fill me-2"></i>+123 456 7890</p>
+            </div>
+        </div>
+
+        <hr class="bg-white">
+
+        <!-- Copyright -->
+        <div class="text-center">
+            &copy; {{ year }} UrbanStyle. Todos los derechos reservados.
+        </div>
+    </div>
+</footer>

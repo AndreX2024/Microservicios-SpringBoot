@@ -1,0 +1,77 @@
+.user-list-container {
+    background-color: #f8f9fa;
+}
+
+/* Spinner */
+.spinner-border.text-primary {
+    width: 2rem;
+    height: 2rem;
+    color: #1e90ff;
+}
+
+/* Alertas */
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: none;
+}
+.alert-danger .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+.alert-danger .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Tabla */
+.table thead th {
+    vertical-align: middle;
+    font-weight: bold;
+    background-color: #343a40;
+    color: white;
+}
+.table tbody tr:hover {
+    background-color: rgba(30, 144, 255, 0.05);
+}
+.table-responsive {
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Botones */
+.btn-outline-primary {
+    color: #1e90ff;
+    border-color: #1e90ff;
+}
+.btn-outline-primary:hover {
+    background-color: #1e90ff;
+    color: white;
+    border-color: #1e90ff;
+}
+
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+    border-color: #dc3545;
+}
+
+.btn-outline-success {
+    color: #28a745;
+    border-color: #28a745;
+}
+.btn-outline-success:hover {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+}
+
+/* Iconos vacíos */
+.bi-person.fs-1.text-muted.d-block.mb-2 {
+    font-size: 2rem !important;
+    color: #6c757d !important;
+}

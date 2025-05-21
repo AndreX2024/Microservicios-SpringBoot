@@ -1,6 +1,7 @@
 package dev.carloscastano.get.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -12,6 +13,7 @@ import jakarta.persistence.*;
 @Setter
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Inventory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +27,10 @@ public class Inventory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_talla", nullable = false)
-    @JsonBackReference("inventory-size-reference")
     private Size talla;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_color", nullable = false)
-    @JsonBackReference("inventory-color-reference")
     private Color color;
 
     private Integer stock;

@@ -1,0 +1,75 @@
+.image-gallery-container {
+    background-color: #f8f9fa;
+}
+
+/* Card principal */
+.card.shadow-sm {
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease-in-out;
+}
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1.5rem rgba(30, 144, 255, 0.15);
+}
+
+/* Inputs y botones */
+.input-group .form-control {
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+}
+.input-group .btn-primary {
+    border-radius: 0.5rem;
+    background-color: #1e90ff;
+    border: none;
+}
+.input-group .btn-primary:hover {
+    background-color: #1976d2;
+}
+
+/* Botón warning - Actualizar */
+.btn-warning {
+    background-color: #ffc107;
+    color: #212529;
+    font-weight: bold;
+}
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+/* Botón danger - Eliminar */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    font-weight: bold;
+}
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Spinner */
+.spinner-border.text-primary {
+    width: 1rem;
+    height: 1rem;
+    color: #1e90ff;
+}
+
+/* Alertas */
+.alert-info {
+    background-color: #cce5ff;
+    color: #004085;
+    border: none;
+}
+
+/* Imagenes */
+.card-img-top {
+    transition: transform 0.3s ease-in-out;
+}
+.card:hover .card-img-top {
+    transform: scale(1.05);
+}
+
+/* Texto secundario */
+.text-muted.small {
+    font-size: 0.875em;
+    color: #6c757d;
+}

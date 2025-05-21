@@ -1,0 +1,55 @@
+.cart-container {
+    background-color: #f8f9fa;
+    padding: 2rem;
+}
+
+/* Spinner */
+.spinner-border.text-primary {
+    width: 2rem;
+    height: 2rem;
+    color: #1e90ff;
+}
+
+/* Tabla */
+.table thead th {
+    background-color: #f1f3f5;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(30, 144, 255, 0.05);
+}
+
+/* Botón eliminar */
+.btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+}
+.btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Total */
+.text-success {
+    color: #28a745;
+}
+
+/* Botón Ir a pagar */
+.btn-success {
+    background-color: #28a745;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease-in-out;
+}
+.btn-success:hover {
+    background-color: #218838;
+}
+
+/* Imagen del producto */
+img.rounded.shadow-sm {
+    object-fit: cover;
+    box-shadow: 0 0.125rem 0.5rem rgba(0, 0, 0, 0.1);
+}

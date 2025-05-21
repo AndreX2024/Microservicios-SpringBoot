@@ -1,0 +1,52 @@
+/* Estilo general del navbar */
+.navbar {
+    background-color: #1e90ff !important;
+    transition: background-color 0.3s ease;
+}
+
+/* Enlaces del menú */
+.nav-link {
+    color: white !important;
+    font-weight: 500;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.nav-link:hover,
+.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white !important;
+    border-radius: 0.5rem;
+}
+
+/* Logo/Título */
+.navbar-brand {
+    font-size: 1.25rem;
+    color: white !important;
+    transition: color 0.3s ease;
+}
+.navbar-brand:hover {
+    color: #f8f9fa !important;
+}
+
+/* Botón Toggler */
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+/* Menú en móvil */
+.navbar-collapse.collapse.show {
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+/* Iconos */
+.bi {
+    vertical-align: middle;
+    transition: transform 0.3s ease;
+}
+.nav-link:hover .bi {
+    transform: scale(1.1);
+}

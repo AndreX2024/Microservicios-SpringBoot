@@ -15,6 +15,7 @@ import java.util.List;
 @Setter
 @ToString
 @EqualsAndHashCode
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Size {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +25,6 @@ public class Size {
     private String nombre;
 
     @OneToMany(mappedBy = "talla", fetch = FetchType.LAZY)
-    @JsonManagedReference("inventory-size-reference")
+    @JsonBackReference("inventory-size-reference")
     private List<Inventory> inventarios;
 }
